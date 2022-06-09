@@ -1,20 +1,19 @@
 import React from 'react'
-import { Text, StyleSheet } from 'react-native'
+import styled from 'styled-components/native'
 
 type IDefaultText = {
     children: React.ReactNode
 }
 
 export const DefaultText: React.FC<IDefaultText> = (props) => {
-  return (
-      <Text style={styles.defaultText}>{props.children}</Text>
-  )
+    return (
+        <DefaultDesc>{props.children}</DefaultDesc>
+    )
 }
 
-const styles = StyleSheet.create({
-    defaultText: {
-        fontSize: 17,
-        fontFamily: 'Roboto-Regular',
-        fontWeight: '400',
-    }
-})
+const DefaultDesc = styled.Text`
+    font-size: 17px;
+    font-family: roboto;
+    font-weight: 400;
+    color: #081F32;
+`
