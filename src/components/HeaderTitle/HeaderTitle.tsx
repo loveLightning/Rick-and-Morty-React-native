@@ -21,7 +21,6 @@ export const HeaderTitle: React.FC<{ title: string }> = ({ title }) => {
 
 const Wrapper = styled.View`
     flex: 1;
-    height: 88px;
     padding-top: 11px;
 `
 
@@ -35,7 +34,7 @@ const FilterText = styled.Text`
 const WrapperFilter = styled.View`
     flex-direction: row;
     justify-content: flex-end;
-    padding-right: 30px;
+    width: 100%;
 `
 
 const TitlePage = styled.Text`
