@@ -1,12 +1,18 @@
+import { useNavigation } from '@react-navigation/native'
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View } from 'react-native'
 import styled from 'styled-components/native'
 
 export const HeaderTitle: React.FC<{ title: string }> = ({ title }) => {
+
+    const navigation = useNavigation<any>()
+
     return (
         <Wrapper>
             <WrapperFilter>
-                <FilterText>
+                <FilterText
+                    onPress={() => navigation.navigate('Filter')}
+                >
                     Filter
                 </FilterText>
             </WrapperFilter>

@@ -1,33 +1,48 @@
+import { useNavigation } from '@react-navigation/native'
 import React from 'react'
-import { View } from 'react-native'
 import styled from 'styled-components/native'
 import { Result } from '../character.type'
 
-export const ListCharacter: React.FC<{item: Result}> = ({ item }) => {
+export const ListCharacter: React.FC<{ item: Result }> = ({ item }) => {
+    const navigation = useNavigation<any>()
     return (
-        <WrapperCharacter>
-            <ImageCharacter source={{ uri: item.image }} />
-            <StatusCharacter>{item.status}</StatusCharacter>
-            <NameCharacter>{item.name}</NameCharacter>
-        </WrapperCharacter>
+        <Wrapper onPress={() => navigation.navigate('CharacterDetail', {
+            character: {
+                id: item.id,
+                species: item.species,
+                namePlanet: item.location.name,
+                image: item.image,
+                gender: item.gender,
+                origin: item.origin.name,
+                name: item.name,
+                status: item.status,
+                type: item.type,
+                episode: item.episode
+            }
+        })}>
+            <WrapperCharacter>
+                <ImageCharacter source={{ uri: item.image }} />
+                <StatusCharacter>{item.status}</StatusCharacter>
+                <NameCharacter>{item.name}</NameCharacter>
+            </WrapperCharacter>
+        </Wrapper>
     )
 }
 
-const WrapperCharacter = styled.View`
-    width: 165px;
+const Wrapper = styled.TouchableOpacity`
+    width: 45%;
     height: 219px;
     background: #FFFFFF;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
+    border-radius: 8px;
     border: 1px solid #EFEFF4;
-    flex-direction: column;
     margin: 10px;
 `
 
+const WrapperCharacter = styled.View`
+`
+
 const ImageCharacter = styled.Image`
-    width: 163px;
+    width: 100%;
     height: 140px;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
