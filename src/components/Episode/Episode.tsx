@@ -1,9 +1,10 @@
-import { useQuery } from '@apollo/client'
 import React, { useEffect } from 'react'
 import { FlatList, View } from 'react-native'
+import { useQuery } from '@apollo/client'
 import styled from 'styled-components/native'
+
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
-import { GET_ALL_EPISODES } from '../../query/episodes'
+import { GET_ALL_EPISODES } from '../../apollo/episodes'
 import { stateEpisodes } from '../../store/dataEpisodes/dataEpisodes'
 import { ListEpisode } from './ListEpisode/ListEpisode'
 
@@ -16,12 +17,15 @@ export const Episode: React.FC = () => {
       dispath(stateEpisodes(data.episodes.results))
     }
   }, [data])
+
   const dataEpisodes = useAppSelector((state) => state.dataEpisodes.dataEpisode)
 
   if (loading) {
-    return <View>
-      <Loader size="large" color="#00ff00" />
-    </View>
+    return (
+      <View>
+        <Loader size="large" color="#00ff00" />
+      </View>
+    )
   }
 
   return (
@@ -29,11 +33,9 @@ export const Episode: React.FC = () => {
       <FlatList
         numColumns={2}
         contentContainerStyle={{ width: '100%' }}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={(item) => item.id.toString()}
         data={dataEpisodes}
-        renderItem={({ item }) => (
-          <ListEpisode item={item} />
-        )}
+        renderItem={({ item }) => <ListEpisode item={item} />}
       />
     </Wrapper>
   )
@@ -47,6 +49,6 @@ const Wrapper = styled.View`
 `
 
 const Loader = styled.ActivityIndicator`
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 `
