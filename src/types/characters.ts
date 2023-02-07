@@ -2,13 +2,13 @@ export interface CharacterTypes {
   id: string
   name: string
   image: string
-  species?: string
-  gender?: string
+  species: string
+  gender: string
   episode: EpisodeTypes[]
-  status?: string
-  location?: LocationType
-  origin?: OriginType
-  type?: string
+  status: string
+  location: LocationType
+  origin: OriginType
+  type: string
 }
 
 export interface CharactersTypes {
@@ -28,7 +28,7 @@ export interface EpisodeTypes {
   id: string
   name: string
   air_date: string
-  episode?: string
+  episode: string
 }
 
 interface InfoTypes {

@@ -26,5 +26,5 @@ const Title = styled.Text`
   text-align: center;
   letter-spacing: -0.08px;
   text-transform: uppercase;
-  color: ${({ theme }) => theme.white};
+  color: ${({ theme }) => theme.white[0]};
 `

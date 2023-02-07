@@ -29,12 +29,21 @@ type Routes = Navigators | Screens | Stacks
 export const useNavigation = () =>
   useNativeNavigation<NativeStackNavigationProp<ParamListBase, Routes>>()
 
-interface WithId {
+interface WithIdAndName {
   id: string
   name: string
 }
 
+interface WithId {
+  id: string
+}
+
 export type CharacterDetailProp = RouteProp<
-  { HomeDescriptionScreen: WithId },
-  'HomeDescriptionScreen'
+  { CharacterDetailScreen: WithIdAndName },
+  'CharacterDetailScreen'
+>
+
+export type EpisodeDetailProp = RouteProp<
+  { EpisodeDetailScreen: WithId },
+  'EpisodeDetailScreen'
 >

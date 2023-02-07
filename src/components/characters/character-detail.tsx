@@ -1,12 +1,11 @@
 import React from 'react'
-import { FlatList, Image, SafeAreaView, View } from 'react-native'
+import { FlatList, Image, SafeAreaView } from 'react-native'
 import styled from 'styled-components/native'
 
-import { Separator } from 'src/components'
-import { ArrowIcon } from 'src/icons'
-import { CharacterTypes, EpisodeTypes } from 'src/types'
+import { EpisodeItem, Separator } from 'src/components'
+import { CharacterTypes } from 'src/types'
 
-import { InfoDesc, InfoText, Title } from './styled'
+import { Title } from './styled'
 import { InformationCharacter } from './ui'
 
 interface Props {
@@ -43,27 +42,6 @@ export const CharacterDetail = ({ characterDetail }: Props) => {
     )
   }
 
-  const renderEpisodes = (item: EpisodeTypes, index: number) => {
-    return (
-      <View>
-        <Wrap>
-          <ItemEpisode>
-            <View>
-              <SeasonEpisode>{item.episode}</SeasonEpisode>
-              <NameEpisode>{item.name}</NameEpisode>
-              <DateEpisode>{item.air_date}</DateEpisode>
-            </View>
-
-            <ArrowIcon />
-          </ItemEpisode>
-          {Number(index) !== characterDetail.episode?.length - 1 && (
-            <Separator />
-          )}
-        </Wrap>
-      </View>
-    )
-  }
-
   return (
     <SafeAreaView>
       <Wrapper>
@@ -72,7 +50,15 @@ export const CharacterDetail = ({ characterDetail }: Props) => {
           data={characterDetail.episode}
           ListHeaderComponent={renderHeader()}
           ListFooterComponent={() => <Separator />}
-          renderItem={({ item, index }) => renderEpisodes(item, index)}
+          renderItem={({ item, index }) => (
+            <EpisodeItem
+              id={item.id}
+              episode={item.episode}
+              name={item.name}
+              air_date={item.air_date}
+              isLast={characterDetail.episode.length - 1 !== index}
+            />
+          )}
           keyExtractor={(item) => item.id?.toString()}
         />
       </Wrapper>
@@ -81,7 +67,7 @@ export const CharacterDetail = ({ characterDetail }: Props) => {
 }
 
 const Wrapper = styled.View`
-  background-color: ${({ theme }) => theme.white};
+  background-color: ${({ theme }) => theme.white[0]};
   width: 100%;
   height: 100%;
 `
@@ -148,32 +134,4 @@ const GenderText = styled.Text`
   text-transform: uppercase;
   font-family: ${({ theme }) => theme.roboto900};
   color: ${({ theme }) => theme.grey[4]};
-`
-
-const ItemEpisode = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px 15px 5px 0;
-`
-
-const SeasonEpisode = styled(InfoText)`
-  padding-top: 0;
-`
-
-const NameEpisode = styled(InfoDesc)`
-  padding-bottom: 0;
-`
-
-const DateEpisode = styled.Text`
-  font-size: 11px;
-  line-height: 13px;
-  letter-spacing: 0.07px;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.grey[5]};
-  font-family: ${({ theme }) => theme.roboto900};
-`
-
-const Wrap = styled.View`
-  padding-left: 15px;
 `

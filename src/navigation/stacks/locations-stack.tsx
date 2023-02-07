@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { getFocusedRouteNameFromRoute, Route } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import {
@@ -9,9 +10,26 @@ import {
 
 import { Screens } from '../routes'
 
+interface Props {
+  route: Route<string>
+  setTabVisible(val: boolean): void
+}
+
+const tabBisibleValue: Record<string, boolean> = {
+  [Screens.Locations]: true,
+  [Screens.LocationDetail]: false,
+}
 const Location = createNativeStackNavigator()
 
-export const LocationStack = () => {
+export const LocationStack = ({ setTabVisible, route }: Props) => {
+  const currentScreen = getFocusedRouteNameFromRoute(route)
+
+  useEffect(() => {
+    if (!currentScreen) return
+
+    setTabVisible(tabBisibleValue[currentScreen])
+  }, [currentScreen, setTabVisible])
+
   return (
     <Location.Navigator initialRouteName={Screens.Locations}>
       <Location.Screen

@@ -1,4 +1,4 @@
-// import { makeVar } from '@apollo/client'
+// import { makeVar, useReactiveVar } from '@apollo/client'
 
 // import { FiltersCharactersTypes } from 'src/types'
 

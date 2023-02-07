@@ -1,4 +1,4 @@
 export { CharactersList } from './characters-list'
-export { CharacterItem } from './ui/character-item'
+export { CharacterItem } from '../character-item'
 export { CharacterDetail } from './character-detail'
 export * from './styled'

@@ -20,7 +20,7 @@ interface HeaderProps {
 }
 
 const Wrapper = styled.SafeAreaView`
-  background-color: ${({ theme }) => theme.white};
+  background-color: ${({ theme }) => theme.white[0]};
 `
 
 const Container = styled.View`
@@ -28,7 +28,7 @@ const Container = styled.View`
   align-items: center;
   justify-content: space-between;
   padding: 8px 0;
-  background-color: ${({ theme }) => theme.white};
+  background-color: ${({ theme }) => theme.white[0]};
   border-bottom-width: 0.5px;
   border-bottom-color: ${({ theme }) => theme.grey[1]};
 `

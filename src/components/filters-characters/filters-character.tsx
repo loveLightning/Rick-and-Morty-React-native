@@ -13,21 +13,13 @@ import { valuesGender, valuesStatus } from './types'
 export const FiltersCharacter = () => {
   const [inputName, setInputName] = useState('')
   const [inputSpecies, setInputSpecies] = useState('')
-  const searchQueryNames = useDebounce(inputName, 1000)
-  const searchQuerySpecies = useDebounce(inputSpecies, 1000)
+  const searchQueryNames = useDebounce(inputName, 2000)
+  const searchQuerySpecies = useDebounce(inputSpecies, 2000)
   const [getAllCharactersNames, { data: charactersNames }] =
-    useLazyQuery<CharactersQueryType>(GET_ALL_CHARACTERS, {
-      variables: {
-        name: searchQueryNames,
-      },
-    })
+    useLazyQuery<CharactersQueryType>(GET_ALL_CHARACTERS)
 
   const [getAllCharactersSpecies, { data: charactersSpecies }] =
-    useLazyQuery<CharactersQueryType>(GET_ALL_CHARACTERS, {
-      variables: {
-        name: searchQuerySpecies,
-      },
-    })
+    useLazyQuery<CharactersQueryType>(GET_ALL_CHARACTERS)
 
   const [names, setNames] = useState<string[]>([])
   const [species, setSpecies] = useState<string[]>([])
@@ -56,13 +48,25 @@ export const FiltersCharacter = () => {
   }
 
   useEffect(() => {
-    getAllCharactersNames()
+    getAllCharactersNames({
+      variables: {
+        filter: {
+          name: searchQueryNames,
+        },
+      },
+    })
     generateUniqueValues()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQueryNames])
 
   useEffect(() => {
-    getAllCharactersSpecies()
+    getAllCharactersSpecies({
+      variables: {
+        filter: {
+          name: searchQuerySpecies,
+        },
+      },
+    })
     generateUniqueValues()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuerySpecies])
@@ -130,7 +134,7 @@ export const FiltersCharacter = () => {
 }
 
 const Wrapper = styled.View`
-  background-color: ${({ theme }) => theme.white};
+  background-color: ${({ theme }) => theme.white[0]};
   width: 100%;
   height: 100%;
 `

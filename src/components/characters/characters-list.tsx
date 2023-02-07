@@ -4,17 +4,14 @@ import { useQuery } from '@apollo/client'
 import styled, { useTheme } from 'styled-components/native'
 
 import { GET_ALL_CHARACTERS } from 'src/apollo'
-import { ErrorMessage } from 'src/components'
+import { CharacterItem, ErrorMessage } from 'src/components'
 import { useFilteresCharacters } from 'src/context'
 import { CharactersQueryType } from 'src/types'
-import { initialRequestedVariables } from 'src/utils'
-
-import { CharacterItem } from './ui'
 
 export const CharactersList: React.FC = () => {
   const { extra_blue } = useTheme()
   const [loadingMore, setLoadingMore] = useState(false)
-  const { filtersValues, isApply } = useFilteresCharacters()
+  const { filtersValues } = useFilteresCharacters()
 
   const newRequestVariables = {
     page: 1,
@@ -33,7 +30,7 @@ export const CharactersList: React.FC = () => {
     fetchMore,
     refetch,
   } = useQuery<CharactersQueryType>(GET_ALL_CHARACTERS, {
-    variables: isApply ? newRequestVariables : initialRequestedVariables,
+    variables: newRequestVariables,
   })
 
   const nextPage = characters?.characters.info.next
@@ -45,7 +42,7 @@ export const CharactersList: React.FC = () => {
     try {
       await fetchMore({
         variables: {
-          page: characters?.characters.info.next,
+          page: nextPage,
         },
       })
     } catch {
@@ -73,39 +70,36 @@ export const CharactersList: React.FC = () => {
   return (
     <SafeAreaView>
       {characters && (
-        <Wrapper>
-          <FlatList
-            numColumns={2}
-            contentContainerStyle={{
-              backgroundColor: 'white',
-              justifyContent: 'space-between',
-              paddingTop: 20,
-              paddingBottom: 20,
-            }}
-            keyExtractor={(item) => item.id.toString()}
-            data={charactersResult?.results}
-            renderItem={({ item }) => <CharacterItem item={item} />}
-            onEndReached={nextPage ? getByScrollCharacters : null}
-            onEndReachedThreshold={Platform.OS == 'ios' ? 0.1 : 0.2}
-            ListFooterComponent={renderFooter}
-            refreshing={loading}
-            onRefresh={() => refetch()}
-          />
-        </Wrapper>
+        <FlatList
+          numColumns={2}
+          contentContainerStyle={{
+            backgroundColor: 'white',
+            justifyContent: 'space-between',
+            paddingTop: 20,
+            paddingBottom: 20,
+          }}
+          keyExtractor={(item) => item.id.toString()}
+          data={charactersResult?.results}
+          renderItem={({ item }) => (
+            <CharacterItem
+              id={item.id}
+              name={item.name}
+              image={item.image}
+              status={item.status}
+            />
+          )}
+          onEndReached={nextPage ? getByScrollCharacters : null}
+          onEndReachedThreshold={Platform.OS == 'ios' ? 0.1 : 0.2}
+          ListFooterComponent={renderFooter}
+          refreshing={loading}
+          onRefresh={() => refetch()}
+        />
       )}
     </SafeAreaView>
   )
 }
 
 const Loader = styled.ActivityIndicator`
-  width: 100%;
-  height: 100%;
-`
-
-const Wrapper = styled.View`
-  background-color: ${({ theme }) => theme.white};
-  padding-left: 15px;
-  padding-right: 15px;
   width: 100%;
   height: 100%;
 `

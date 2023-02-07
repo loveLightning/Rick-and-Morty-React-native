@@ -2,8 +2,11 @@ import React, { useEffect } from 'react'
 import { getFocusedRouteNameFromRoute, Route } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-import { CharacterDetailScreen, CharactersScreen } from 'src/screens'
-import { FiltersCharacterScreen } from 'src/screens'
+import {
+  CharacterDetailScreen,
+  CharactersScreen,
+  FiltersCharacterScreen,
+} from 'src/screens'
 
 import { Screens } from '../routes'
 

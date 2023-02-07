@@ -31,28 +31,29 @@ export const TabBar = () => {
           name={Stacks.Characters}
           options={{
             tabBarIcon: CharacterIcon,
-            tabBarLabel: 'Character',
           }}>
           {(props) => (
             <CharacterStack setTabVisible={setTabVisible} {...props} />
           )}
         </Tab.Screen>
-        <Tab.Screen
-          name={Stacks.Locations}
-          component={LocationStack}
-          options={{
-            tabBarIcon: LocationIcon,
-            tabBarLabel: 'Location',
-          }}
-        />
+
         <Tab.Screen
           name={Stacks.Episodes}
-          component={EpisodeStack}
           options={{
             tabBarIcon: EpisodeIcon,
-            tabBarLabel: 'Episode',
-          }}
-        />
+          }}>
+          {(props) => <EpisodeStack setTabVisible={setTabVisible} {...props} />}
+        </Tab.Screen>
+
+        <Tab.Screen
+          name={Stacks.Locations}
+          options={{
+            tabBarIcon: LocationIcon,
+          }}>
+          {(props) => (
+            <LocationStack setTabVisible={setTabVisible} {...props} />
+          )}
+        </Tab.Screen>
       </Tab.Navigator>
     </>
   )

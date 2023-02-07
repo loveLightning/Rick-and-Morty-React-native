@@ -3,12 +3,11 @@ import { gql } from '@apollo/client'
 export const GET_ALL_CHARACTERS = gql`
   query fetchCharacters($page: Int, $filter: FilterCharacter) {
     characters(page: $page, filter: $filter) {
-      uniqueNames @client
-      uniqueSpecies @client
       results {
         id
         name
         image
+        status
       }
       info {
         next
@@ -30,6 +29,7 @@ export const GET_CHARACTER_DETAIL = gql`
       status
       type
       location {
+        id
         name
       }
       origin {

@@ -6,6 +6,6 @@ export { LocationsScreen } from './locations'
 export { LocationDetailScreen } from './location-detail'
 export { FiltersLocationScreen } from './filters-location'
 
-export { EpisodesScreen } from './episodes'
 export { EpisodeDetailScreen } from './episode-detail'
+export { EpisodesScreen } from './episodes'
 export { FiltersEpisodeScreen } from './filters-episode'
