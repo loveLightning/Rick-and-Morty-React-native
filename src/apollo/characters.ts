@@ -8,6 +8,7 @@ export const GET_ALL_CHARACTERS = gql`
         name
         image
         status
+        species
       }
       info {
         next

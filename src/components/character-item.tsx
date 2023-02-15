@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Image } from 'react-native'
 import styled from 'styled-components/native'
 
-import { Screens, useNavigation } from 'src/navigation'
+import { Screens, Stacks, useNavigation } from 'src/navigation'
 
 interface Props {
   id: string
@@ -11,26 +11,33 @@ interface Props {
   image: string
 }
 
-export const CharacterItem = ({ id, name, status, image }: Props) => {
-  const { navigate } = useNavigation()
+// eslint-disable-next-line react/display-name
+const CharacterItem = memo(({ id, name, status, image }: Props) => {
+  const { push } = useNavigation()
 
   return (
     <ContainerCharacter>
       <Container
         activeOpacity={0.8}
         onPress={() => {
-          navigate(Screens.CharacterDetail, {
-            id,
-            name,
+          push(Stacks.Characters, {
+            screen: Screens.CharacterDetail,
+            params: {
+              id,
+              name,
+            },
           })
         }}>
-        <ImageCharacter source={{ uri: image ?? null }} />
+        <ImageCharacter source={{ uri: image ?? undefined }} />
         <TextStatus>{status}</TextStatus>
         <TextName>{name}</TextName>
       </Container>
     </ContainerCharacter>
   )
-}
+})
+
+export { CharacterItem }
+
 const ContainerCharacter = styled.View`
   flex: 1;
   flex-direction: row;

@@ -14,7 +14,7 @@ export const RadioButtonInActiveIcon = (props: SvgProps) => {
       {...props}>
       <Path
         d="M24.25 15c0 5.66-4.59 10.25-10.25 10.25S3.75 20.66 3.75 15 8.34 4.75 14 4.75 24.25 9.34 24.25 15Z"
-        fill={white}
+        fill={white[0]}
         stroke={grey[6]}
       />
     </Svg>

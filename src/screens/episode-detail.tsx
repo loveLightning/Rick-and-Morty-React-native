@@ -3,10 +3,10 @@ import { View } from 'react-native'
 import { SafeAreaView } from 'react-native'
 import { useQuery } from '@apollo/client'
 import { useRoute } from '@react-navigation/native'
+import { useTheme } from 'styled-components/native'
 
 import { GET_EPISODE_DETAIL } from 'src/apollo'
-import { ErrorMessage, HeaderCard, Loader } from 'src/components'
-import { EpisodeDetail } from 'src/components/episodes'
+import { EpisodeDetail, ErrorMessage, HeaderCard, Loader } from 'src/components'
 import { EpisodeDetailProp, useNavigation } from 'src/navigation'
 import { EpsiodeQueryType } from 'src/types'
 
@@ -14,6 +14,7 @@ export const EpisodeDetailScreen = () => {
   const {
     params: { id },
   } = useRoute<EpisodeDetailProp>()
+  const { extra_blue } = useTheme()
 
   const { setOptions } = useNavigation()
 
@@ -26,7 +27,7 @@ export const EpisodeDetailScreen = () => {
       id,
     },
   })
-  const result = episode?.data?.episode
+  const result = episode?.episode
 
   useLayoutEffect(() => {
     setOptions({
@@ -44,7 +45,7 @@ export const EpisodeDetailScreen = () => {
   if (loading) {
     return (
       <View>
-        <Loader />
+        <Loader size="large" color={extra_blue} />
       </View>
     )
   }

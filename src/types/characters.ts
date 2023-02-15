@@ -39,17 +39,22 @@ interface InfoTypes {
 
 interface LocationType {
   name: string
+  id: string
 }
 
 interface OriginType {
   name: string
 }
 
-export interface FiltersCharactersTypes {
-  name: string
-  status: string
-  species: string
-  gender: string
+export interface CharacterFiltersTypes {
+  page: 1
+  filter: {
+    name: string
+    status: string
+    species: string
+    gender: string
+    type: string
+  }
 }
 
 export enum Status {

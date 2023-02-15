@@ -1,5 +1,6 @@
 import React from 'react'
 import { ActivityIndicator, ActivityIndicatorProps } from 'react-native'
+import styled from 'styled-components/native'
 import { useTheme } from 'styled-components/native'
 
 export const Loader = ({
@@ -9,5 +10,16 @@ export const Loader = ({
 }: ActivityIndicatorProps) => {
   const { blue } = useTheme()
 
-  return <ActivityIndicator size={size} color={color ?? blue} {...props} />
+  return (
+    <Wrapper>
+      <ActivityIndicator size={size} color={color ?? blue} {...props} />
+    </Wrapper>
+  )
 }
+
+const Wrapper = styled.View`
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+`

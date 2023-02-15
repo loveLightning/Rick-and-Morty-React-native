@@ -1,11 +1,8 @@
-import React, { FC, ReactNode } from 'react'
+import React, { ReactNode } from 'react'
 import { StyleProp, TextStyle, View } from 'react-native'
 import styled from 'styled-components/native'
 
-import { useFilteresCharacters } from 'src/context'
-import { useFiltersIsEmpty } from 'src/hooks'
 import { BackHomeIcon } from 'src/icons'
-import { defaultFiltersValues } from 'src/utils'
 // import { isSmall } from 'src/utils'
 
 interface HeaderProps {
@@ -17,6 +14,8 @@ interface HeaderProps {
   titleMaxWidth?: number
   isClear?: boolean
   style?: StyleProp<TextStyle>
+  isFilterValues?: boolean
+  clearFiltersValues?: () => void
 }
 
 const Wrapper = styled.SafeAreaView`
@@ -73,7 +72,7 @@ const TextIsClear = styled.Text`
   padding-left: 16px;
 `
 
-export const HeaderCard: FC<HeaderProps> = ({
+export const HeaderCard = ({
   isBack = false,
   isClear = false,
   pressOnBack = () => undefined,
@@ -81,17 +80,13 @@ export const HeaderCard: FC<HeaderProps> = ({
   ComponentsRight,
   titleMargin: marginLeft,
   titleMaxWidth = 191,
+  isFilterValues,
+  clearFiltersValues,
   ...props
-}) => {
+}: HeaderProps) => {
   const paddingRight = ComponentsRight ? 16 : 0
 
-  const { filtersValues, setFiltersValues } = useFilteresCharacters()
-  const { isFilterEmpty } = useFiltersIsEmpty(filtersValues)
   // const isDecrease = isSmall ? '50%' : 'auto'
-
-  const clearFilters = () => {
-    setFiltersValues(defaultFiltersValues)
-  }
 
   return (
     <Wrapper>
@@ -103,13 +98,13 @@ export const HeaderCard: FC<HeaderProps> = ({
           </BackHomeWrapper>
         )}
 
-        {isClear && isFilterEmpty() && (
-          <WrapperIsClear onPress={clearFilters}>
+        {isClear && isFilterValues && (
+          <WrapperIsClear onPress={clearFiltersValues}>
             <TextIsClear>Clear</TextIsClear>
           </WrapperIsClear>
         )}
 
-        {!(isBack && isClear && isFilterEmpty) && <Empty />}
+        {!(isBack && isClear && isFilterValues) && <Empty />}
 
         {title && (
           <View

@@ -13,9 +13,9 @@ export enum Screens {
   CharacterDetail = 'CharacterDetailScreen',
   LocationDetail = 'LocationDetailScreen',
   EpisodeDetail = 'EpisodeDetailScreen',
-  FiltersCharacters = 'FiltersCharactersScreen',
-  FiltersLocations = 'FiltersLocationsScreen',
-  FiltersEpisodes = 'FiltersEpisodesScreen',
+  CharacterFilters = 'CharacterFiltersScreen',
+  LocationFilters = 'LocationFiltersScreen',
+  EpisodeFilters = 'EpisodeFiltersScreen',
 }
 
 export enum Stacks {
@@ -46,4 +46,9 @@ export type CharacterDetailProp = RouteProp<
 export type EpisodeDetailProp = RouteProp<
   { EpisodeDetailScreen: WithId },
   'EpisodeDetailScreen'
+>
+
+export type LocationDetailProp = RouteProp<
+  { LocationDetailScreen: WithId },
+  'LocationDetailScreen'
 >

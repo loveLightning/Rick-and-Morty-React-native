@@ -1,5 +1,6 @@
 export * from './characters'
 export * from './episodes'
 export * from './locations'
+export * from './graphql'
 export { client } from './client'
 export { cache } from './cache'

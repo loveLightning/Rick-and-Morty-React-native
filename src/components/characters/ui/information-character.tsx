@@ -1,7 +1,9 @@
 import React from 'react'
-import { Text } from 'react-native'
+import { Text, View } from 'react-native'
 import styled from 'styled-components/native'
 
+import { ArrowIcon } from 'src/icons'
+import { Screens, Stacks, useNavigation } from 'src/navigation'
 import { CharacterTypes } from 'src/types'
 
 import { InfoDesc, InformationLine, InfoText, Title } from '../styled'
@@ -11,6 +13,8 @@ interface Props {
 }
 
 export const InformationCharacter = ({ characterDetail }: Props) => {
+  const { push } = useNavigation()
+
   return (
     <InformationWrapper>
       <Title>Informations</Title>
@@ -37,8 +41,21 @@ export const InformationCharacter = ({ characterDetail }: Props) => {
             </InfoDesc>
           </WrapLine>
 
-          <InfoText>Location</InfoText>
-          <InfoDesc>{characterDetail.location?.name}</InfoDesc>
+          <ContainerLocation
+            onPress={() =>
+              push(Stacks.Locations, {
+                screen: Screens.LocationDetail,
+                params: {
+                  id: characterDetail.location.id,
+                },
+              })
+            }>
+            <View>
+              <InfoText>Location</InfoText>
+              <InfoDesc>{characterDetail.location?.name}</InfoDesc>
+            </View>
+            <ArrowIcon />
+          </ContainerLocation>
         </WrapperInfo>
       </InformationLine>
     </InformationWrapper>
@@ -54,4 +71,11 @@ const WrapperInfo = styled.View`
 const WrapLine = styled.View`
   border-bottom-color: rgba(0, 0, 0, 0.2);
   border-bottom-width: 1px;
+`
+
+const ContainerLocation = styled.TouchableOpacity`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 16px;
 `

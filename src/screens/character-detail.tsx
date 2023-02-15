@@ -1,7 +1,7 @@
 import React, { useEffect, useLayoutEffect } from 'react'
 import { useLazyQuery } from '@apollo/client'
 import { useRoute } from '@react-navigation/native'
-import styled from 'styled-components/native'
+import styled, { useTheme } from 'styled-components/native'
 
 import { GET_CHARACTER_DETAIL } from 'src/apollo'
 import {
@@ -18,7 +18,8 @@ export const CharacterDetailScreen = () => {
     params: { id, name },
   } = useRoute<CharacterDetailProp>()
 
-  const { setOptions } = useNavigation()
+  const { setOptions, goBack } = useNavigation()
+  const { extra_blue } = useTheme()
 
   const [getCharacterDetail, { data: characterDetail, loading, error }] =
     useLazyQuery<CharacterQueryType>(GET_CHARACTER_DETAIL, {
@@ -33,21 +34,21 @@ export const CharacterDetailScreen = () => {
 
   useLayoutEffect(() => {
     setOptions({
-      header: ({ navigation }) => (
+      header: () => (
         <HeaderCard
           titleMaxWidth={120}
           isBack
           title={name}
-          pressOnBack={navigation.goBack}
+          pressOnBack={goBack}
         />
       ),
     })
-  }, [name, setOptions])
+  }, [goBack, name, setOptions])
 
   if (loading) {
     return (
       <Wrapper>
-        <Loader />
+        <Loader size="large" color={extra_blue} />
       </Wrapper>
     )
   }

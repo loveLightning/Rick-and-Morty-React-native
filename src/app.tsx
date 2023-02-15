@@ -1,15 +1,17 @@
 import React, { useEffect } from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { enableScreens } from 'react-native-screens'
+import SplashScreen from 'react-native-splash-screen'
 import { ApolloProvider } from '@apollo/client'
 import { NavigationContainer } from '@react-navigation/native'
 import { ThemeProvider } from 'styled-components'
 
 import { client } from 'src/apollo'
-import { FiltersCharactersProvider } from 'src/context'
 import { RootNavigation } from 'src/navigation'
 import { AppTheme } from 'src/theme'
 import { isIOS } from 'src/utils'
+
+import { FiltersProvider } from './context'
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -19,9 +21,13 @@ const App: React.FC = () => {
     enableScreens(false)
   }, [])
 
+  useEffect(() => {
+    SplashScreen.hide()
+  }, [])
+
   return (
     <ThemeProvider theme={AppTheme}>
-      <FiltersCharactersProvider>
+      <FiltersProvider>
         <NavigationContainer>
           <ApolloProvider client={client}>
             <SafeAreaProvider>
@@ -29,7 +35,7 @@ const App: React.FC = () => {
             </SafeAreaProvider>
           </ApolloProvider>
         </NavigationContainer>
-      </FiltersCharactersProvider>
+      </FiltersProvider>
     </ThemeProvider>
   )
 }

@@ -1,8 +1,10 @@
 package com.awesometsproject;
 
+import android.os.Bundle;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
+import org.devio.rn.splashscreen.SplashScreen;
 
 public class MainActivity extends ReactActivity {
 
@@ -11,11 +13,11 @@ public class MainActivity extends ReactActivity {
    * rendering of the component.
    */
 
-  //react-native-screens override
-  // @Override
-  // protected void onCreate(Bundle savedInstanceState) {
-  //     super.onCreate(null);
-  // }
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    SplashScreen.show(this);
+    super.onCreate(null);
+  }
 
   @Override
   protected String getMainComponentName() {

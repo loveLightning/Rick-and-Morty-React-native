@@ -1,23 +1,34 @@
 import React, { useLayoutEffect } from 'react'
 
 import { CharactersList, HeaderScreen } from 'src/components'
-import { Screens, useNavigation } from 'src/navigation'
+import { useFiltersContext } from 'src/context'
+import { Screens, Stacks, useNavigation } from 'src/navigation'
+import { FilterTypes } from 'src/types'
+import { filtersIsEmpty } from 'src/utils'
 
 export const CharactersScreen = () => {
-  const { setOptions, navigate } = useNavigation()
+  const { setOptions, push } = useNavigation()
+
+  const { filters } = useFiltersContext()
 
   const navigateToScreen = () => {
-    navigate(Screens.FiltersCharacters)
+    push(Stacks.Characters, {
+      screen: Screens.CharacterFilters,
+    })
   }
 
   useLayoutEffect(() => {
     setOptions({
       header: () => (
-        <HeaderScreen title="Character" navigate={navigateToScreen} />
+        <HeaderScreen
+          title="Character"
+          navigate={navigateToScreen}
+          isShowCircle={filtersIsEmpty(filters[FilterTypes.character].filter)}
+        />
       ),
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [navigate, setOptions])
+  }, [filters, setOptions])
 
   return <CharactersList />
 }

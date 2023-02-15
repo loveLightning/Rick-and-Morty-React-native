@@ -2,20 +2,18 @@ import React, { ReactElement } from 'react'
 import styled from 'styled-components/native'
 
 interface Props {
-  status: string | undefined
-  name: string | undefined
-  species: string | undefined
-  marginTop: number
+  status: string
+  name: string
+  species: string
 }
 
 export const DescriptionDetail = ({
   status,
   name,
   species,
-  marginTop,
 }: Props): ReactElement => {
   return (
-    <DescriptionImage style={{ marginTop }}>
+    <DescriptionImage>
       <TextStatus>{status}</TextStatus>
       <TextName>{name}</TextName>
       <TextSpecies>{species}</TextSpecies>
@@ -43,6 +41,7 @@ const TextName = styled.Text`
   font-size: 28px;
   line-height: 34px;
   color: ${({ theme }) => theme.light_black};
+  text-align: center;
 `
 const TextStatus = styled.Text`
   font-size: 11px;
@@ -52,5 +51,5 @@ const TextStatus = styled.Text`
 `
 const DescriptionImage = styled.View`
   align-items: center;
-  margin-bottom: 20px;
+  margin: 20px 0;
 `

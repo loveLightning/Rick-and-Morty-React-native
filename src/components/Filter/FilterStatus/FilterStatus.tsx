@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { RadioButton } from 'react-native-paper'
 import styled from 'styled-components/native'
 
-import { FilterContext } from '../../../context/characters-context'
+import { FilterContext } from '../../../context/filters-context'
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
 import { stateStatus } from '../../../store/dataStatus/dataFilterCharacters'
 

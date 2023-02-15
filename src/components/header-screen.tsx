@@ -5,6 +5,7 @@ import styled from 'styled-components/native'
 interface HeaderProps {
   title?: string
   navigate: () => void
+  isShowCircle: boolean
   style?: StyleProp<TextStyle>
 }
 
@@ -34,25 +35,37 @@ const Title = styled.Text`
 const WrapperFilter = styled.TouchableOpacity`
   flex-direction: row;
   justify-content: flex-end;
+  align-items: center;
 `
 
-const FIlterText = styled.Text`
+const FilterText = styled.Text`
   color: ${({ theme }) => theme.extra_blue};
   font-weight: 900;
   letter-spacing: -0.41px;
   font-size: 17px;
+  margin-left: 5px;
+`
+
+const Circle = styled.View`
+  width: 14px;
+  height: 14px;
+  border-radius: 7px;
+  background-color: ${({ theme }) => theme.extra_blue};
 `
 
 export const HeaderScreen: FC<HeaderProps> = ({
   title,
   navigate,
+  isShowCircle,
   ...props
 }) => {
   return (
     <Wrapper>
       <Container>
         <WrapperFilter onPress={navigate}>
-          <FIlterText>Filter</FIlterText>
+          {isShowCircle && <Circle />}
+
+          <FilterText>Filter</FilterText>
         </WrapperFilter>
 
         {title && (

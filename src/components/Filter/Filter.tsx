@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client'
 import styled from 'styled-components/native'
 
 import { GET_ALL_CHARACTERS } from '../../apollo/characters'
-import { AppContextInterface, FilterContext } from '../../context/characters-context'
+import { AppContextInterface, FilterContext } from '../../context/filters-context'
 import { useAppDispatch } from '../../hooks/hooks'
 import { stateData } from '../../store/dataCharacters/dataCharacters'
 import { Result } from '../characters/character.type'

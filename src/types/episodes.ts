@@ -1,8 +1,4 @@
 export interface EpsiodeQueryType {
-  data: EpisodeType
-}
-
-export interface EpisodeType {
   episode: EpisodeTypesWithCharacters
 }
 
@@ -19,4 +15,37 @@ export interface CharacterItemTypes {
   name: string
   status: string
   image: string
+}
+
+export interface EpsiodeDataQueryType {
+  data: EpisodesQueryType
+}
+
+export interface EpisodesQueryType {
+  episodes: EpisodesTypes
+}
+
+export interface EpisodesTypes {
+  info: InfoEpisodesTypes
+  results: ResultEpsiodesTypes[]
+}
+
+export interface InfoEpisodesTypes {
+  pages: number
+  next: number
+}
+
+export interface ResultEpsiodesTypes {
+  id: string
+  name: string
+  episode: string
+  air_date: string
+}
+
+export interface EpisodeFiltersTypes {
+  page: number
+  filter: {
+    name: string
+    episode: string
+  }
 }

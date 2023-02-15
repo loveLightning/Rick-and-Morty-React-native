@@ -1,6 +1,6 @@
 import React from 'react'
 import { FlatList, Image, SafeAreaView } from 'react-native'
-import styled from 'styled-components/native'
+import styled, { useTheme } from 'styled-components/native'
 
 import { EpisodeItem, Separator } from 'src/components'
 import { CharacterTypes } from 'src/types'
@@ -13,6 +13,8 @@ interface Props {
 }
 
 export const CharacterDetail = ({ characterDetail }: Props) => {
+  const { white } = useTheme()
+
   const renderHeader = () => {
     return (
       <>
@@ -43,7 +45,7 @@ export const CharacterDetail = ({ characterDetail }: Props) => {
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ backgroundColor: white[0] }}>
       <Wrapper>
         <FlatList
           contentContainerStyle={{ paddingBottom: 30 }}
@@ -67,7 +69,6 @@ export const CharacterDetail = ({ characterDetail }: Props) => {
 }
 
 const Wrapper = styled.View`
-  background-color: ${({ theme }) => theme.white[0]};
   width: 100%;
   height: 100%;
 `

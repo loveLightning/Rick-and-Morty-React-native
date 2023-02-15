@@ -2,9 +2,9 @@ import React from 'react'
 import styled from 'styled-components/native'
 
 import { RadioButton, Separator } from 'src/components'
-import { useFilteresCharacters } from 'src/context'
+import { useFiltersContext } from 'src/context'
 import { ArrowIcon } from 'src/icons'
-import { Status } from 'src/types'
+import { FilterTypes, Status } from 'src/types'
 
 interface Props {
   isLast: boolean
@@ -13,22 +13,22 @@ interface Props {
 }
 
 export const RadioMultiple = ({ isLast, value, status }: Props) => {
-  const { filtersValues, setFiltersValues } = useFilteresCharacters()
+  const { filters, updateFilters } = useFiltersContext()
 
   return (
     <>
       <WrapperChoice
         onPress={() => {
           status === Status.Gender && value
-            ? setFiltersValues({ ...filtersValues, gender: value })
-            : setFiltersValues({ ...filtersValues, status: value })
+            ? updateFilters('gender', value, FilterTypes.character)
+            : updateFilters('status', value, FilterTypes.character)
         }}>
         <ContainerRadio>
           <RadioButton
             selected={
               status === Status.Gender && value
-                ? filtersValues.gender === value
-                : filtersValues.status === value
+                ? filters[FilterTypes.character].filter.gender === value
+                : filters[FilterTypes.character].filter.status === value
             }>
             <WrapText>
               <ItemChoice>{value}</ItemChoice>

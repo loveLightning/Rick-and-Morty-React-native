@@ -1,3 +1,3 @@
-export { CharacterStack } from './characters-stack'
-export { EpisodeStack } from './episodes-stack'
-export { LocationStack } from './locations-stack'
+export { CharactersStack } from './characters-stack'
+export { EpisodesStack } from './episodes-stack'
+export { LocationsStack } from './locations-stack'

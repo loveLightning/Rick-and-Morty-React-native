@@ -1,36 +1,17 @@
-import React, { useEffect } from 'react'
-import { getFocusedRouteNameFromRoute, Route } from '@react-navigation/native'
+import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import {
   CharacterDetailScreen,
+  CharacterFiltersScreen,
   CharactersScreen,
-  FiltersCharacterScreen,
 } from 'src/screens'
 
 import { Screens } from '../routes'
 
-interface Props {
-  route: Route<string>
-  setTabVisible(val: boolean): void
-}
-
-const tabBisibleValue: Record<string, boolean> = {
-  [Screens.Characters]: true,
-  [Screens.CharacterDetail]: false,
-}
-
 const Character = createNativeStackNavigator()
 
-export const CharacterStack = ({ setTabVisible, route }: Props) => {
-  const currentScreen = getFocusedRouteNameFromRoute(route)
-
-  useEffect(() => {
-    if (!currentScreen) return
-
-    setTabVisible(tabBisibleValue[currentScreen])
-  }, [currentScreen, setTabVisible])
-
+export const CharactersStack = () => {
   return (
     <Character.Navigator initialRouteName={Screens.Characters}>
       <Character.Screen
@@ -44,9 +25,9 @@ export const CharacterStack = ({ setTabVisible, route }: Props) => {
         component={CharacterDetailScreen}
       />
       <Character.Screen
-        name={Screens.FiltersCharacters}
+        name={Screens.CharacterFilters}
         options={{ headerShown: true }}
-        component={FiltersCharacterScreen}
+        component={CharacterFiltersScreen}
       />
     </Character.Navigator>
   )

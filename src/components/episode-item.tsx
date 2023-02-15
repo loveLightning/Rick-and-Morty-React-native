@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { View } from 'react-native'
 import styled from 'styled-components/native'
 
 import { Separator } from 'src/components'
 import { ArrowIcon } from 'src/icons'
-import { Screens, useNavigation } from 'src/navigation'
+import { Screens, Stacks, useNavigation } from 'src/navigation'
 
 interface Props {
   id: string
@@ -14,32 +14,44 @@ interface Props {
   isLast: boolean
 }
 
-export const EpisodeItem = ({ episode, name, air_date, isLast, id }: Props) => {
-  const { navigate } = useNavigation()
+// eslint-disable-next-line react/display-name
+const EpisodeItem = memo(({ episode, name, air_date, isLast, id }: Props) => {
+  const { push } = useNavigation()
 
   return (
-    <View>
-      <Wrap>
-        <ItemEpisode
-          activeOpacity={0.8}
-          onPress={() => {
-            navigate(Screens.EpisodeDetail, {
-              id,
-            })
-          }}>
-          <View>
-            <SeasonEpisode>{episode}</SeasonEpisode>
-            <NameEpisode>{name}</NameEpisode>
-            <DateEpisode>{air_date}</DateEpisode>
-          </View>
+    <>
+      <View>
+        <Wrap>
+          <ItemEpisode
+            activeOpacity={0.8}
+            onPress={() =>
+              push(Stacks.Episodes, {
+                screen: Screens.EpisodeDetail,
+                params: {
+                  id,
+                },
+              })
+            }>
+            <View>
+              <SeasonEpisode>{episode}</SeasonEpisode>
+              <NameEpisode>{name}</NameEpisode>
+              <DateEpisode>{air_date}</DateEpisode>
+            </View>
 
-          <ArrowIcon />
-        </ItemEpisode>
-        {isLast && <Separator />}
-      </Wrap>
-    </View>
+            <ArrowIcon />
+          </ItemEpisode>
+          {isLast && <Separator />}
+        </Wrap>
+      </View>
+    </>
   )
-}
+})
+
+export { EpisodeItem }
+
+const Wrap = styled.View`
+  padding-left: 15px;
+`
 
 const ItemEpisode = styled.TouchableOpacity`
   flex-direction: row;
@@ -73,8 +85,4 @@ const DateEpisode = styled.Text`
   text-transform: uppercase;
   color: ${({ theme }) => theme.grey[5]};
   font-family: ${({ theme }) => theme.roboto900};
-`
-
-const Wrap = styled.View`
-  padding-left: 15px;
 `

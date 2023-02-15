@@ -10,33 +10,38 @@ interface Props {
 }
 
 export const EpisodeDetail = ({ episodeDetail }: Props) => {
+  const renderHeader = () => {
+    return <Subtitle>Characters</Subtitle>
+  }
+
   return (
-    <View style={{ marginBottom: 400 }}>
+    <View>
       <ContainerHeaderImage>
         <DescriptionDetail
-          marginTop={20}
           status={episodeDetail?.episode}
           name={episodeDetail?.name}
           species={episodeDetail?.air_date}
         />
       </ContainerHeaderImage>
 
-      <Subtitle>Residents</Subtitle>
-
       <FlatList
+        ListHeaderComponent={renderHeader()}
+        contentContainerStyle={{
+          backgroundColor: 'white',
+          justifyContent: 'space-between',
+          paddingBottom: 250,
+        }}
         data={episodeDetail?.characters}
         numColumns={2}
-        keyExtractor={(item) => String(item.id)}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <ContainerEpisode>
-            <CharacterItem
-              key={item.id}
-              name={item.name}
-              image={item.image}
-              status={item.status}
-              id={item.id}
-            />
-          </ContainerEpisode>
+          <CharacterItem
+            key={item.id}
+            name={item.name}
+            image={item.image}
+            status={item.status}
+            id={item.id}
+          />
         )}
       />
     </View>
@@ -52,11 +57,5 @@ const Subtitle = styled.Text`
 `
 
 const ContainerHeaderImage = styled.View`
-  background: rgba(118, 118, 128, 0.12);
-`
-const ContainerEpisode = styled.View`
-  flex: 1;
-  flex-wrap: wrap;
-  flex-direction: row;
-  margin: 15px;
+  background: ${({ theme }) => theme.grey[3]};
 `
