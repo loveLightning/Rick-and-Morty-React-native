@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlatList, Image, SafeAreaView } from 'react-native'
+import { FlatList, Image, SafeAreaView, View } from 'react-native'
 import styled, { useTheme } from 'styled-components/native'
 
 import { EpisodeItem, Separator } from 'src/components'
@@ -18,23 +18,20 @@ export const CharacterDetail = ({ characterDetail }: Props) => {
   const renderHeader = () => {
     return (
       <>
-        <WrapperImages>
-          <ImageBackground
-            source={require('assets/images/background-character.png')}
-          />
-
-          <WrapImageCharacter>
-            <ImageCharacter source={{ uri: characterDetail.image }} />
-          </WrapImageCharacter>
-
-          <BackgroundGrey>
-            <WrapTexts>
-              <StatusText>{characterDetail.status}</StatusText>
-              <NameText>{characterDetail.name}</NameText>
-              <GenderText>{characterDetail.species}</GenderText>
-            </WrapTexts>
-          </BackgroundGrey>
-        </WrapperImages>
+        <Container>
+          {characterDetail.image && (
+            <>
+              <BgImg
+                source={require('assets/images/background-character.png')}
+                resizeMode={'cover'}
+              />
+              <Img source={{ uri: characterDetail.image }} />
+            </>
+          )}
+          <StatusText>{characterDetail.status}</StatusText>
+          <NameText>{characterDetail.name}</NameText>
+          <GenderText>{characterDetail.species}</GenderText>
+        </Container>
 
         <InformationCharacter characterDetail={characterDetail} />
 
@@ -68,48 +65,34 @@ export const CharacterDetail = ({ characterDetail }: Props) => {
   )
 }
 
-const Wrapper = styled.View`
-  width: 100%;
-  height: 100%;
-`
-
-const WrapperImages = styled.View`
-  position: relative;
-  width: 100%;
-`
-
-const ImageBackground = styled(Image)`
-  width: 100%;
-`
-
-const WrapImageCharacter = styled.View`
-  position: absolute;
-  flex-direction: row;
+const Container = styled(View)`
+  background-color: ${({ theme }) => theme.grey[3]};
   justify-content: center;
-  top: 20px;
-  left: 0;
-  right: 0;
-  z-index: 1;
+  align-items: center;
+  padding-top: 14px;
+  padding-bottom: 20px;
 `
 
-const ImageCharacter = styled(Image)`
+const BgImg = styled(Image)`
+  width: 100%;
+  height: 84px;
+  position: absolute;
+  top: 0;
+  left: 0;
+`
+
+const Img = styled(Image)`
   width: 130px;
   height: 130px;
   border-radius: 65px;
-  border-width: 4px;
+  border-width: 5px;
   border-color: ${({ theme }) => theme.grey[3]};
+  margin-bottom: 20px;
 `
 
-const BackgroundGrey = styled.View`
-  background-color: ${({ theme }) => theme.grey[3]};
+const Wrapper = styled.View`
   width: 100%;
-  height: 170px;
-`
-
-const WrapTexts = styled.View`
-  margin-top: 80px;
-  flex-direction: column;
-  align-items: center;
+  height: 100%;
 `
 
 const StatusText = styled.Text`

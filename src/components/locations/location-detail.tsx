@@ -2,7 +2,7 @@ import React from 'react'
 import { FlatList, View } from 'react-native'
 import styled from 'styled-components/native'
 
-import { CharacterItem, DescriptionDetail } from 'src/components'
+import { CharacterItem, DescriptionDetail, NotFound } from 'src/components'
 import { LocationTypes } from 'src/types'
 
 interface Props {
@@ -24,26 +24,30 @@ export const LocationDetail = ({ locationDetail }: Props) => {
         />
       </ContainerHeaderImage>
 
-      <FlatList
-        ListHeaderComponent={renderHeader()}
-        contentContainerStyle={{
-          backgroundColor: 'white',
-          justifyContent: 'space-between',
-          paddingBottom: 250,
-        }}
-        data={locationDetail?.residents}
-        numColumns={2}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <CharacterItem
-            key={item.id}
-            name={item.name}
-            image={item.image}
-            status={item.status}
-            id={item.id}
-          />
-        )}
-      />
+      {locationDetail.residents.length ? (
+        <FlatList
+          ListHeaderComponent={renderHeader()}
+          contentContainerStyle={{
+            backgroundColor: 'white',
+            justifyContent: 'space-between',
+            paddingBottom: 250,
+          }}
+          data={locationDetail.residents}
+          numColumns={2}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <CharacterItem
+              key={item.id}
+              name={item.name}
+              image={item.image}
+              status={item.status}
+              id={item.id}
+            />
+          )}
+        />
+      ) : (
+        <NotFound>Residents not found</NotFound>
+      )}
     </View>
   )
 }

@@ -1,18 +1,17 @@
 import React, { useLayoutEffect } from 'react'
 
 import { CharactersList, HeaderScreen } from 'src/components'
-import { useFiltersContext } from 'src/context'
+import { useCharacterFiltersContext } from 'src/context'
 import { Screens, Stacks, useNavigation } from 'src/navigation'
-import { FilterTypes } from 'src/types'
 import { filtersIsEmpty } from 'src/utils'
 
 export const CharactersScreen = () => {
-  const { setOptions, push } = useNavigation()
+  const { setOptions, navigate } = useNavigation()
 
-  const { filters } = useFiltersContext()
+  const { filters } = useCharacterFiltersContext()
 
   const navigateToScreen = () => {
-    push(Stacks.Characters, {
+    navigate(Stacks.Characters, {
       screen: Screens.CharacterFilters,
     })
   }
@@ -23,7 +22,7 @@ export const CharactersScreen = () => {
         <HeaderScreen
           title="Character"
           navigate={navigateToScreen}
-          isShowCircle={filtersIsEmpty(filters[FilterTypes.character].filter)}
+          isShowCircle={filtersIsEmpty(filters.filter)}
         />
       ),
     })

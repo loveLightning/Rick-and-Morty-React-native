@@ -4,6 +4,7 @@ import styled, { useTheme } from 'styled-components/native'
 
 import { useFetchEpisodesLazyQuery } from 'src/apollo'
 import {
+  ButtonBack,
   HeaderCard,
   InputWithVoiceRecorder,
   Loader,
@@ -11,9 +12,9 @@ import {
   ReusableModal,
   Separator,
 } from 'src/components'
-import { useFiltersContext } from 'src/context'
+import { useEpisodeFiltersContext } from 'src/context'
 import { useDebounce } from 'src/hooks'
-import { FilterTypes } from 'src/types'
+import { useNavigation } from 'src/navigation'
 import { defaultEpisodeFiltersValues, generateUniqueValues } from 'src/utils'
 
 interface Props {
@@ -39,8 +40,10 @@ export const SearchInputModalEpisodes = ({
   const { extra_blue } = useTheme()
   const [loadingMore, setLoadingMore] = useState(false)
 
+  const { goBack } = useNavigation()
+
   const searchInputQuery = useDebounce(inputValue, 1000)
-  const { filters, updateFilters } = useFiltersContext()
+  const { filters, updateFilters } = useEpisodeFiltersContext()
   const resultEpisodes = generateUniqueValues(
     data?.episodes.results,
     filterStatus,
@@ -60,6 +63,11 @@ export const SearchInputModalEpisodes = ({
     } finally {
       setLoadingMore(false)
     }
+  }
+
+  const closeModal = () => {
+    setIsVisible(!isVisible)
+    goBack
   }
 
   const renderFooter = () => {
@@ -85,13 +93,13 @@ export const SearchInputModalEpisodes = ({
   }
 
   useEffect(() => {
-    updateFilters(filterStatus, searchInputQuery, FilterTypes.episode)
+    updateFilters(filterStatus, searchInputQuery)
     getAllEpisodes({
       variables: {
         ...defaultEpisodeFiltersValues,
         filter: {
           ...defaultEpisodeFiltersValues.filter,
-          [filterStatus]: filters.episode.filter[filterStatus],
+          [filterStatus]: filters.filter[filterStatus],
         },
       },
     })
@@ -101,11 +109,8 @@ export const SearchInputModalEpisodes = ({
   return (
     <ReusableModal isVisible={isVisible} setIsVisible={setIsVisible}>
       <HeaderCard
-        isBack
         title={titleName}
-        pressOnBack={() => {
-          setIsVisible(!isVisible)
-        }}
+        ComponentsLeft={<ButtonBack pressOnBack={closeModal} />}
       />
       <InputWithVoiceRecorder
         setFiltersValues={setFiltersValues}

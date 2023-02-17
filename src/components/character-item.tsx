@@ -30,7 +30,9 @@ const CharacterItem = memo(({ id, name, status, image }: Props) => {
         }}>
         <ImageCharacter source={{ uri: image ?? undefined }} />
         <TextStatus>{status}</TextStatus>
-        <TextName>{name}</TextName>
+        <TextName>
+          {name.length >= 25 ? name.slice(0, 25) + '...' : name}
+        </TextName>
       </Container>
     </ContainerCharacter>
   )
@@ -59,7 +61,7 @@ const TextStatus = styled.Text`
   color: ${({ theme }) => theme.grey[4]};
 `
 const TextName = styled.Text`
-  padding: 0 0 0 12px;
+  padding: 0 12px 0 12px;
   max-height: 50px;
   font-family: ${({ theme }) => theme.roboto900};
   font-size: 17px;

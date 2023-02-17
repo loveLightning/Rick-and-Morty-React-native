@@ -17,20 +17,19 @@ import {
   NotFound,
   Separator,
 } from 'src/components'
-import { useFiltersContext } from 'src/context'
-import { FilterTypes } from 'src/types'
+import { useEpisodeFiltersContext } from 'src/context'
 
 export const EpisodesList: React.FC = () => {
   const { extra_blue, white } = useTheme()
   const [loadingMore, setLoadingMore] = useState(false)
-  const { appliedFilters, clearFilters } = useFiltersContext()
+  const { appliedFilters, clearFilters } = useEpisodeFiltersContext()
 
   const {
     data: episodes,
     loading,
     error,
     fetchMore,
-  } = useFetchEpisodesQuery({ variables: appliedFilters[FilterTypes.episode] })
+  } = useFetchEpisodesQuery({ variables: appliedFilters })
   const nextPage = episodes?.episodes.info.next
   const epsiodesResult = episodes?.episodes
 
@@ -50,7 +49,7 @@ export const EpisodesList: React.FC = () => {
   }, [fetchMore, nextPage])
 
   const refetchData = () => {
-    clearFilters(FilterTypes.episode)
+    clearFilters()
   }
 
   const renderFooter = () => {
@@ -119,10 +118,10 @@ const Wrapper = styled.View`
   height: 100%;
 `
 
-const SeasonText = styled.Text`
-  color: ${({ theme }) => theme.grey[5]};
-  font-family: ${({ theme }) => theme.roboto700};
-  font-size: 20px;
-  line-height: 25px;
-  letter-spacing: 0.38px;
-`
+// const SeasonText = styled.Text`
+//   color: ${({ theme }) => theme.grey[5]};
+//   font-family: ${({ theme }) => theme.roboto700};
+//   font-size: 20px;
+//   line-height: 25px;
+//   letter-spacing: 0.38px;
+// `

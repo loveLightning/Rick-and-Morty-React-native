@@ -33,11 +33,12 @@ export const InputWithVoiceRecorder = ({
     setIsRecord(!isRecord)
   }
 
+  const clear = async () => {
+    await Voice.destroy()
+    Voice.removeAllListeners()
+  }
+
   useEffect(() => {
-    async function clear() {
-      await Voice.destroy()
-      Voice.removeAllListeners()
-    }
     Voice.onSpeechResults = onSpeechResults
 
     return () => {

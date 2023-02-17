@@ -3,3 +3,9 @@ export enum FilterTypes {
   episode = 'episode',
   location = 'location',
 }
+
+export enum FiltersActionTypes {
+  UPDATE,
+  CLEAR,
+  APPLY,
+}

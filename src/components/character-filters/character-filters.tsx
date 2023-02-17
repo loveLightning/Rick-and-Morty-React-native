@@ -1,5 +1,5 @@
-import React, { useLayoutEffect, useState } from 'react'
-import { SafeAreaView } from 'react-native'
+import React, { useCallback, useLayoutEffect, useState } from 'react'
+import { SafeAreaView, TouchableOpacity } from 'react-native'
 import styled from 'styled-components/native'
 
 import {
@@ -7,10 +7,11 @@ import {
   HeaderCard,
   RadioMultiple,
   RadioSearch,
+  TextIsClear,
 } from 'src/components'
-import { useFiltersContext } from 'src/context'
+import { useCharacterFiltersContext } from 'src/context'
 import { useNavigation } from 'src/navigation'
-import { FilterTypes, Status } from 'src/types'
+import { Status } from 'src/types'
 import { filtersIsEmpty } from 'src/utils'
 
 import { SearchInputModalCharacters } from './search-input-modal-characters'
@@ -19,65 +20,68 @@ import { valuesGender, valuesStatus } from './types'
 export const CharacterFilters = () => {
   const { setOptions, goBack } = useNavigation()
   const { filters, clearFilters, updateFilters, applyFilters } =
-    useFiltersContext()
+    useCharacterFiltersContext()
 
   const [isNameModal, setIsNameModal] = useState(false)
   const [isSpeciesModal, setIsSpeciesModal] = useState(false)
 
-  const applyFiltersHandler = () => {
+  const applyFiltersHandler = useCallback(() => {
     applyFilters()
     goBack()
-  }
+  }, [applyFilters, goBack])
 
   useLayoutEffect(() => {
     setOptions({
       header: () => (
         <HeaderCard
-          isClear
           title="Filter"
-          clearFiltersValues={() => clearFilters(FilterTypes.character)}
-          isFilterValues={filtersIsEmpty(filters.character.filter)}
+          ComponentsLeft={
+            filtersIsEmpty(filters.filter) && (
+              <TouchableOpacity onPress={() => clearFilters()}>
+                <TextIsClear>Clear</TextIsClear>
+              </TouchableOpacity>
+            )
+          }
           ComponentsRight={<ApplyBtn navigateScreen={applyFiltersHandler} />}
         />
       ),
     })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [clearFilters, filters, setOptions])
+  }, [applyFiltersHandler, clearFilters, filters, setOptions])
 
   return (
     <SafeAreaView>
       <Wrapper>
         <SearchInputModalCharacters
           filterStatus="name"
-          inputValue={filters.character.filter.name}
+          inputValue={filters.filter.name}
           isVisible={isNameModal}
           setIsVisible={setIsNameModal}
           titleName="Name"
           setFiltersValues={(valueInput: string) =>
-            updateFilters('name', valueInput, FilterTypes.character)
+            updateFilters('name', valueInput)
           }
         />
 
         <SearchInputModalCharacters
           filterStatus="species"
-          inputValue={filters.character.filter.species}
+          inputValue={filters.filter.species}
           isVisible={isSpeciesModal}
           setIsVisible={setIsSpeciesModal}
           titleName="species"
           setFiltersValues={(valueInput: string) =>
-            updateFilters('species', valueInput, FilterTypes.character)
+            updateFilters('species', valueInput)
           }
         />
 
         <RadioSearch
           changeValueSelected={() => setIsNameModal(!isNameModal)}
-          selected={filters.character.filter.name.length > 0}
+          selected={filters.filter.name.length > 0}
           title="Name"
           subtitle="Give a name"
         />
         <RadioSearch
           changeValueSelected={() => setIsSpeciesModal(!isSpeciesModal)}
-          selected={filters.character.filter.species.length > 0}
+          selected={filters.filter.species.length > 0}
           title="Species"
           subtitle="Enter species"
         />

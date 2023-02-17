@@ -2,20 +2,11 @@ import React, { ReactNode } from 'react'
 import { StyleProp, TextStyle, View } from 'react-native'
 import styled from 'styled-components/native'
 
-import { BackHomeIcon } from 'src/icons'
-// import { isSmall } from 'src/utils'
-
 interface HeaderProps {
-  isBack?: boolean
-  pressOnBack?: () => void
   title?: string
   ComponentsRight?: ReactNode
-  titleMargin?: number
-  titleMaxWidth?: number
-  isClear?: boolean
+  ComponentsLeft?: ReactNode
   style?: StyleProp<TextStyle>
-  isFilterValues?: boolean
-  clearFiltersValues?: () => void
 }
 
 const Wrapper = styled.SafeAreaView`
@@ -30,58 +21,27 @@ const Container = styled.View`
   background-color: ${({ theme }) => theme.white[0]};
   border-bottom-width: 0.5px;
   border-bottom-color: ${({ theme }) => theme.grey[1]};
+  height: 50px;
 `
 
 const Title = styled.Text`
-  width: 100%;
   max-width: 191px;
   text-align: center;
   font-family: ${({ theme }) => theme.roboto700};
   font-size: 16px;
   line-height: 19px;
   color: ${({ theme }) => theme.light_black};
+  max-width: 130px;
 `
 
-const Empty = styled.View`
-  width: 40px;
-  height: 40px;
-`
-
-const BackHomeWrapper = styled.TouchableOpacity`
-  margin-left: 10px;
-  flex-direction: row;
-`
-
-const TextBack = styled.Text`
-  font-weight: 400;
-  font-size: 17px;
-  line-height: 22px;
-  letter-spacing: -0.41px;
-  color: ${({ theme }) => theme.extra_blue};
-  margin-left: 5px;
-`
-
-const WrapperIsClear = styled.TouchableOpacity``
-
-const TextIsClear = styled.Text`
-  font-weight: 400;
-  font-size: 17px;
-  line-height: 22px;
-  letter-spacing: -0.41px;
-  color: ${({ theme }) => theme.extra_blue};
-  padding-left: 16px;
+const ButtonInner = styled.TouchableOpacity`
+  min-width: 65px;
 `
 
 export const HeaderCard = ({
-  isBack = false,
-  isClear = false,
-  pressOnBack = () => undefined,
   title,
   ComponentsRight,
-  titleMargin: marginLeft,
-  titleMaxWidth = 191,
-  isFilterValues,
-  clearFiltersValues,
+  ComponentsLeft,
   ...props
 }: HeaderProps) => {
   const paddingRight = ComponentsRight ? 16 : 0
@@ -91,36 +51,29 @@ export const HeaderCard = ({
   return (
     <Wrapper>
       <Container style={{ paddingRight }}>
-        {isBack && (
+        {/* {isBack && (
           <BackHomeWrapper onPress={pressOnBack} activeOpacity={0.5}>
             <BackHomeIcon />
             <TextBack>Back</TextBack>
           </BackHomeWrapper>
-        )}
+        )} */}
 
-        {isClear && isFilterValues && (
-          <WrapperIsClear onPress={clearFiltersValues}>
+        <ButtonInner>{ComponentsLeft}</ButtonInner>
+
+        {/* {isClear && isFilterValues && (
+          <TouchableOpacity onPress={clearFiltersValues}>
             <TextIsClear>Clear</TextIsClear>
-          </WrapperIsClear>
-        )}
-
-        {!(isBack && isClear && isFilterValues) && <Empty />}
+          </TouchableOpacity>
+        )} */}
 
         {title && (
-          <View
-            style={{
-              marginLeft,
-              // width: isDecrease,
-            }}>
-            <Title
-              numberOfLines={1}
-              style={{ maxWidth: titleMaxWidth }}
-              {...props}>
+          <View>
+            <Title numberOfLines={1} ellipsizeMode="tail" {...props}>
               {title}
             </Title>
           </View>
         )}
-        {ComponentsRight ? <View>{ComponentsRight}</View> : <Empty />}
+        <ButtonInner>{ComponentsRight}</ButtonInner>
       </Container>
     </Wrapper>
   )

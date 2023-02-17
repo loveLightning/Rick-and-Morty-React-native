@@ -25,7 +25,7 @@ export const TabBar = () => {
         <Tab.Screen
           name={Screens.Characters}
           options={{
-            tabBarIcon: CharacterIcon,
+            tabBarIcon: ({ focused }) => <CharacterIcon focused={focused} />,
             tabBarLabel: 'Character',
           }}
           component={CharactersScreen}
@@ -34,7 +34,7 @@ export const TabBar = () => {
         <Tab.Screen
           name={Screens.Locations}
           options={{
-            tabBarIcon: LocationIcon,
+            tabBarIcon: ({ focused }) => <LocationIcon focused={focused} />,
             tabBarLabel: 'Location',
           }}
           component={LocationsScreen}
@@ -43,7 +43,7 @@ export const TabBar = () => {
         <Tab.Screen
           name={Screens.Episodes}
           options={{
-            tabBarIcon: EpisodeIcon,
+            tabBarIcon: ({ focused }) => <EpisodeIcon focused={focused} />,
             tabBarLabel: 'Episode',
           }}
           component={EpisodesScreen}

@@ -1,17 +1,18 @@
 import React, { useLayoutEffect } from 'react'
 
 import { EpisodesList, HeaderScreen } from 'src/components'
-import { useFiltersContext } from 'src/context'
-import { Screens, useNavigation } from 'src/navigation'
-import { FilterTypes } from 'src/types'
+import { useEpisodeFiltersContext } from 'src/context'
+import { Screens, Stacks, useNavigation } from 'src/navigation'
 import { filtersIsEmpty } from 'src/utils'
 
 export const EpisodesScreen = () => {
   const { setOptions, navigate } = useNavigation()
-  const { filters } = useFiltersContext()
+  const { filters } = useEpisodeFiltersContext()
 
   const navigateToScreen = () => {
-    navigate(Screens.EpisodeFilters)
+    navigate(Stacks.Episodes, {
+      screen: Screens.EpisodeFilters,
+    })
   }
 
   useLayoutEffect(() => {
@@ -20,7 +21,7 @@ export const EpisodesScreen = () => {
         <HeaderScreen
           title="Episode"
           navigate={navigateToScreen}
-          isShowCircle={filtersIsEmpty(filters[FilterTypes.episode].filter)}
+          isShowCircle={filtersIsEmpty(filters.filter)}
         />
       ),
     })

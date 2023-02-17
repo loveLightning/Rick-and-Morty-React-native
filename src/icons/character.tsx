@@ -1,23 +1,38 @@
 import React from 'react'
-import Svg, { Path, SvgProps } from 'react-native-svg'
+import Svg, { Path } from 'react-native-svg'
+import { useTheme } from 'styled-components/native'
 
-export const CharacterIcon = (props: SvgProps) => {
+interface Props {
+  focused: boolean
+}
+
+export const CharacterIcon = ({ focused = false }: Props) => {
+  const { extra_blue, grey } = useTheme()
+
   return (
-    <Svg
-      width={28}
-      height={28}
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}>
-      <Path
-        d="M10.923 14.966a2.222 2.222 0 1 0 0-4.444 2.222 2.222 0 0 0 0 4.444ZM17.59 14.966a2.222 2.222 0 1 0 0-4.444 2.222 2.222 0 0 0 0 4.444Z"
-        fill={props.color}
-      />
-      <Path
-        d="M14.09 4C9.079 4 5 8.038 5 13l.052 8a3.518 3.518 0 0 0 3.483 3c1.186 0 2.095-.417 2.7-1.174a4.065 4.065 0 0 0 5.725-.014c.607.762 1.519 1.188 2.686 1.188 1.95 0 3.536-1.57 3.536-3.5V13c0-4.962-4.078-9-9.091-9Z"
-        stroke={props.color}
-        strokeWidth={2}
-      />
+    <Svg width="28" height="28" fill="none">
+      {!focused ? (
+        <>
+          <Path
+            d="M10.92 14.97a2.22 2.22 0 1 0 0-4.45 2.22 2.22 0 0 0 0 4.45ZM17.59 14.97a2.22 2.22 0 1 0 0-4.45 2.22 2.22 0 0 0 0 4.45Z"
+            fill={grey[0]}
+          />
+          <Path
+            d="M14.1 4A9.06 9.06 0 0 0 5 13l.05 8c.25 1.7 1.7 3 3.49 3 1.18 0 2.09-.42 2.7-1.17a4.03 4.03 0 0 0 5.72-.02c.6.76 1.52 1.19 2.69 1.19a3.52 3.52 0 0 0 3.53-3.5V13c0-4.96-4.08-9-9.09-9Z"
+            stroke={grey[0]}
+            strokeWidth="2"
+          />
+        </>
+      ) : (
+        <>
+          <Path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M14.1 4A9.06 9.06 0 0 0 5 13l.05 8c.25 1.7 1.7 3 3.49 3 1.18 0 2.09-.42 2.7-1.17a4.03 4.03 0 0 0 5.72-.02c.6.76 1.52 1.19 2.69 1.19a3.52 3.52 0 0 0 3.53-3.5V13c0-4.96-4.08-9-9.09-9Zm-3.18 10.97a2.22 2.22 0 1 0 0-4.45 2.22 2.22 0 0 0 0 4.45Zm8.9-2.23a2.22 2.22 0 1 1-4.45 0 2.22 2.22 0 0 1 4.44 0Z"
+            fill={extra_blue}
+          />
+        </>
+      )}
     </Svg>
   )
 }

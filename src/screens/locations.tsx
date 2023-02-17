@@ -1,18 +1,19 @@
 import React, { useLayoutEffect } from 'react'
 
 import { HeaderScreen, LocationsList } from 'src/components'
-import { useFiltersContext } from 'src/context'
-import { Screens, useNavigation } from 'src/navigation'
-import { FilterTypes } from 'src/types'
+import { useLocationFiltersContext } from 'src/context'
+import { Screens, Stacks, useNavigation } from 'src/navigation'
 import { filtersIsEmpty } from 'src/utils'
 
 export const LocationsScreen = () => {
-  const { setOptions, push } = useNavigation()
+  const { setOptions, navigate } = useNavigation()
 
-  const { filters } = useFiltersContext()
+  const { filters } = useLocationFiltersContext()
 
   const navigateToScreen = () => {
-    push(Screens.LocationFilters)
+    navigate(Stacks.Locations, {
+      screen: Screens.LocationFilters,
+    })
   }
 
   useLayoutEffect(() => {
@@ -21,7 +22,7 @@ export const LocationsScreen = () => {
         <HeaderScreen
           title="Location"
           navigate={navigateToScreen}
-          isShowCircle={filtersIsEmpty(filters[FilterTypes.location].filter)}
+          isShowCircle={filtersIsEmpty(filters.filter)}
         />
       ),
     })

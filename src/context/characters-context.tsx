@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useMemo, useReducer } from 'react'
 
-import { QueryLocationsArgs } from 'src/apollo'
+import { QueryCharactersArgs } from 'src/apollo'
 import { FiltersActionTypes } from 'src/types'
-import { defaultLocationFiltersValues } from 'src/utils'
+import { defaultCharacterFiltersValues } from 'src/utils'
 
 interface ActionType {
   type: FiltersActionTypes
@@ -17,28 +17,28 @@ interface Props {
 }
 
 interface FiltersContext {
-  filters: QueryLocationsArgs
-  appliedFilters: QueryLocationsArgs
+  filters: QueryCharactersArgs
+  appliedFilters: QueryCharactersArgs
   updateFilters: (val: string, key: string) => void
   clearFilters: () => void
   applyFilters: () => void
 }
 
 interface ReducerFilters {
-  filters: QueryLocationsArgs
-  appliedFilters: QueryLocationsArgs
+  filters: QueryCharactersArgs
+  appliedFilters: QueryCharactersArgs
 }
 
 const initialValues: FiltersContext = {
-  filters: defaultLocationFiltersValues,
-  appliedFilters: defaultLocationFiltersValues,
+  filters: defaultCharacterFiltersValues,
+  appliedFilters: defaultCharacterFiltersValues,
 
   updateFilters: () => undefined,
   applyFilters: () => undefined,
   clearFilters: () => undefined,
 }
 
-export const locationFiltersReducer = (
+export const characterFiltersReducer = (
   state: ReducerFilters,
   action: ActionType,
 ): ReducerFilters => {
@@ -80,16 +80,16 @@ export const locationFiltersReducer = (
   }
 }
 
-const LocationFiltersContext = createContext<FiltersContext>(initialValues)
+const CharacterFiltersContext = createContext<FiltersContext>(initialValues)
 
-export const LocationsProvider = ({ children }: Props) => {
+export const CharactersProvider = ({ children }: Props) => {
   const initialValuesReducer = {
-    filters: defaultLocationFiltersValues,
-    appliedFilters: defaultLocationFiltersValues,
+    filters: defaultCharacterFiltersValues,
+    appliedFilters: defaultCharacterFiltersValues,
   }
 
   const [state, dispatch] = useReducer(
-    locationFiltersReducer,
+    characterFiltersReducer,
     initialValuesReducer,
   )
 
@@ -123,11 +123,11 @@ export const LocationsProvider = ({ children }: Props) => {
   )
 
   return (
-    <LocationFiltersContext.Provider value={values}>
+    <CharacterFiltersContext.Provider value={values}>
       {children}
-    </LocationFiltersContext.Provider>
+    </CharacterFiltersContext.Provider>
   )
 }
 
-export const useLocationFiltersContext = () =>
-  useContext(LocationFiltersContext)
+export const useCharacterFiltersContext = () =>
+  useContext(CharacterFiltersContext)

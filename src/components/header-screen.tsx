@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { StyleProp, TextStyle, View } from 'react-native'
+import { StyleProp, TextStyle } from 'react-native'
 import styled from 'styled-components/native'
 
 interface HeaderProps {
@@ -34,8 +34,8 @@ const Title = styled.Text`
 
 const WrapperFilter = styled.TouchableOpacity`
   flex-direction: row;
-  justify-content: flex-end;
   align-items: center;
+  align-self: flex-end;
 `
 
 const FilterText = styled.Text`
@@ -69,11 +69,9 @@ export const HeaderScreen: FC<HeaderProps> = ({
         </WrapperFilter>
 
         {title && (
-          <View>
-            <Title numberOfLines={1} {...props}>
-              {title}
-            </Title>
-          </View>
+          <Title numberOfLines={1} {...props}>
+            {title}
+          </Title>
         )}
       </Container>
     </Wrapper>

@@ -5,6 +5,7 @@ import styled, { useTheme } from 'styled-components/native'
 
 import { GET_CHARACTER_DETAIL } from 'src/apollo'
 import {
+  ButtonBack,
   CharacterDetail,
   ErrorMessage,
   HeaderCard,
@@ -36,10 +37,8 @@ export const CharacterDetailScreen = () => {
     setOptions({
       header: () => (
         <HeaderCard
-          titleMaxWidth={120}
-          isBack
           title={name}
-          pressOnBack={goBack}
+          ComponentsLeft={<ButtonBack pressOnBack={goBack} />}
         />
       ),
     })

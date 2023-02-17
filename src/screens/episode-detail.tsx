@@ -6,7 +6,13 @@ import { useRoute } from '@react-navigation/native'
 import { useTheme } from 'styled-components/native'
 
 import { GET_EPISODE_DETAIL } from 'src/apollo'
-import { EpisodeDetail, ErrorMessage, HeaderCard, Loader } from 'src/components'
+import {
+  ButtonBack,
+  EpisodeDetail,
+  ErrorMessage,
+  HeaderCard,
+  Loader,
+} from 'src/components'
 import { EpisodeDetailProp, useNavigation } from 'src/navigation'
 import { EpsiodeQueryType } from 'src/types'
 
@@ -16,7 +22,7 @@ export const EpisodeDetailScreen = () => {
   } = useRoute<EpisodeDetailProp>()
   const { extra_blue } = useTheme()
 
-  const { setOptions } = useNavigation()
+  const { setOptions, goBack } = useNavigation()
 
   const {
     data: episode,
@@ -31,16 +37,14 @@ export const EpisodeDetailScreen = () => {
 
   useLayoutEffect(() => {
     setOptions({
-      header: ({ navigation }) => (
+      header: () => (
         <HeaderCard
-          titleMaxWidth={120}
-          isBack
           title={result?.name}
-          pressOnBack={navigation.goBack}
+          ComponentsLeft={<ButtonBack pressOnBack={goBack} />}
         />
       ),
     })
-  }, [result?.name, setOptions])
+  }, [goBack, result?.name, setOptions])
 
   if (loading) {
     return (

@@ -24,7 +24,7 @@ const TextType = styled.Text`
   border-color: ${({ theme }) => theme.grey[4]};
 `
 const TextName = styled(TextType)`
-  padding: 0 0 0 12px;
+  padding: 0 12px 0 12px;
   max-height: 50px;
   font-family: ${({ theme }) => theme.roboto900};
   font-size: 17px;
@@ -38,7 +38,7 @@ const ItemLocation = memo(
     return (
       <Container activeOpacity={0.8} onPress={onPress}>
         <TextType>{type}</TextType>
-        <TextName>{name}</TextName>
+        <TextName>{name.length > 25 ? name.slice(0, 25) : name}</TextName>
       </Container>
     )
   },

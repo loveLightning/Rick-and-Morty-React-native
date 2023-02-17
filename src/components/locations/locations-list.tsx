@@ -11,9 +11,8 @@ import styled from 'styled-components/native'
 
 import { useFetchLocationsQuery } from 'src/apollo'
 import { ErrorMessage, Loader, NotFound } from 'src/components'
-import { useFiltersContext } from 'src/context'
-import { Screens, useNavigation } from 'src/navigation'
-import { FilterTypes } from 'src/types'
+import { useLocationFiltersContext } from 'src/context'
+import { Screens, Stacks, useNavigation } from 'src/navigation'
 
 import { ItemLocation } from './ui'
 
@@ -22,7 +21,7 @@ export const LocationsList: React.FC = () => {
   const [loadingMore, setLoadingMore] = useState(false)
   const { push } = useNavigation()
 
-  const { appliedFilters, clearFilters } = useFiltersContext()
+  const { appliedFilters, clearFilters } = useLocationFiltersContext()
 
   const {
     data: locations,
@@ -30,7 +29,7 @@ export const LocationsList: React.FC = () => {
     error,
     fetchMore,
   } = useFetchLocationsQuery({
-    variables: appliedFilters[FilterTypes.location],
+    variables: appliedFilters,
   })
   const nextPage = locations?.locations.info.next
   const locationsResult = locations?.locations
@@ -51,12 +50,15 @@ export const LocationsList: React.FC = () => {
   }
 
   const refetchData = () => {
-    clearFilters(FilterTypes.location)
+    clearFilters()
   }
 
   const openScreen = (id: string) => {
-    push(Screens.LocationDetail, {
-      id,
+    push(Stacks.Locations, {
+      screen: Screens.LocationDetail,
+      params: {
+        id,
+      },
     })
   }
 

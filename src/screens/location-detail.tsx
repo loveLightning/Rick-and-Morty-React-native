@@ -7,6 +7,7 @@ import { useTheme } from 'styled-components/native'
 
 import { GET_LOCATION_DETAIL } from 'src/apollo'
 import {
+  ButtonBack,
   ErrorMessage,
   HeaderCard,
   Loader,
@@ -19,9 +20,9 @@ export const LocationDetailScreen = () => {
   const {
     params: { id },
   } = useRoute<LocationDetailProp>()
-  const { extra_blue } = useTheme()
+  const { extra_blue, white } = useTheme()
 
-  const { setOptions } = useNavigation()
+  const { setOptions, goBack } = useNavigation()
 
   const {
     data: location,
@@ -36,16 +37,14 @@ export const LocationDetailScreen = () => {
 
   useLayoutEffect(() => {
     setOptions({
-      header: ({ navigation }) => (
+      header: () => (
         <HeaderCard
-          titleMaxWidth={120}
-          isBack
           title={result?.name}
-          pressOnBack={navigation.goBack}
+          ComponentsLeft={<ButtonBack pressOnBack={goBack} />}
         />
       ),
     })
-  }, [result?.name, setOptions])
+  }, [goBack, result?.name, setOptions])
 
   if (loading) {
     return (
@@ -64,7 +63,7 @@ export const LocationDetailScreen = () => {
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1, backgroundColor: white[0] }}>
       {result && <LocationDetail locationDetail={result} />}
     </SafeAreaView>
   )

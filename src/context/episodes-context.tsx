@@ -1,43 +1,132 @@
-import React, { createContext, useContext, useMemo, useState } from 'react'
+import React, { createContext, useContext, useMemo, useReducer } from 'react'
 
-import { EpisodeFiltersTypes } from 'src/types'
+import { QueryEpisodesArgs } from 'src/apollo'
+import { FiltersActionTypes } from 'src/types'
 import { defaultEpisodeFiltersValues } from 'src/utils'
 
-interface EpisodeFiltersContext {
-  episodeFilters: EpisodeFiltersTypes
-  setEpisodeFilters: React.Dispatch<React.SetStateAction<EpisodeFiltersTypes>>
+interface ActionType {
+  type: FiltersActionTypes
+  payload?: {
+    key?: string
+    value?: string
+  }
 }
 
 interface Props {
   children: React.ReactNode
 }
 
-const initialValues: EpisodeFiltersContext = {
-  episodeFilters: defaultEpisodeFiltersValues,
-  setEpisodeFilters: () => undefined,
+interface FiltersContext {
+  filters: QueryEpisodesArgs
+  appliedFilters: QueryEpisodesArgs
+  updateFilters: (val: string, key: string) => void
+  clearFilters: () => void
+  applyFilters: () => void
 }
 
-const EpsiodeFiltersContext =
-  createContext<EpisodeFiltersContext>(initialValues)
+interface ReducerFilters {
+  filters: QueryEpisodesArgs
+  appliedFilters: QueryEpisodesArgs
+}
 
-export const EpisodeFiltersProvider = ({ children }: Props) => {
-  const [episodeFilters, setEpisodeFilters] = useState<EpisodeFiltersTypes>(
-    defaultEpisodeFiltersValues,
+const initialValues: FiltersContext = {
+  filters: defaultEpisodeFiltersValues,
+  appliedFilters: defaultEpisodeFiltersValues,
+
+  updateFilters: () => undefined,
+  applyFilters: () => undefined,
+  clearFilters: () => undefined,
+}
+
+export const episodeFiltersReducer = (
+  state: ReducerFilters,
+  action: ActionType,
+): ReducerFilters => {
+  switch (action.type) {
+    case FiltersActionTypes.UPDATE: {
+      if (!action.payload?.key) {
+        return state
+      }
+
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          filter: {
+            ...state.filters.filter,
+            [action.payload.key]: action.payload.value,
+          },
+        },
+      }
+    }
+
+    case FiltersActionTypes.APPLY: {
+      return {
+        ...state,
+        appliedFilters: state.filters,
+      }
+    }
+
+    case FiltersActionTypes.CLEAR: {
+      return {
+        appliedFilters: initialValues.appliedFilters,
+        filters: initialValues.filters,
+      }
+    }
+
+    default: {
+      return state
+    }
+  }
+}
+
+const EpisodeFiltersContext = createContext<FiltersContext>(initialValues)
+
+export const EpisodesProvider = ({ children }: Props) => {
+  const initialValuesReducer = {
+    filters: defaultEpisodeFiltersValues,
+    appliedFilters: defaultEpisodeFiltersValues,
+  }
+
+  const [state, dispatch] = useReducer(
+    episodeFiltersReducer,
+    initialValuesReducer,
   )
 
-  const values: EpisodeFiltersContext = useMemo(
+  const updateFilters = (key: string, value: string) => {
+    dispatch({
+      type: FiltersActionTypes.UPDATE,
+      payload: { key, value },
+    })
+  }
+
+  const clearFilters = () => {
+    dispatch({ type: FiltersActionTypes.CLEAR })
+  }
+
+  const applyFilters = () => {
+    dispatch({ type: FiltersActionTypes.APPLY })
+  }
+
+  const filters = state.filters
+  const appliedFilters = state.appliedFilters
+
+  const values = useMemo(
     () => ({
-      episodeFilters,
-      setEpisodeFilters,
+      filters,
+      appliedFilters,
+      updateFilters,
+      clearFilters,
+      applyFilters,
     }),
-    [episodeFilters],
+    [appliedFilters, filters],
   )
 
   return (
-    <EpsiodeFiltersContext.Provider value={values}>
+    <EpisodeFiltersContext.Provider value={values}>
       {children}
-    </EpsiodeFiltersContext.Provider>
+    </EpisodeFiltersContext.Provider>
   )
 }
 
-export const useEpisodeFilters = () => useContext(EpsiodeFiltersContext)
+export const useEpisodeFiltersContext = () => useContext(EpisodeFiltersContext)

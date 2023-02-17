@@ -11,7 +11,11 @@ import { RootNavigation } from 'src/navigation'
 import { AppTheme } from 'src/theme'
 import { isIOS } from 'src/utils'
 
-import { FiltersProvider } from './context'
+import {
+  CharactersProvider,
+  EpisodesProvider,
+  LocationsProvider,
+} from './context'
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -27,15 +31,19 @@ const App: React.FC = () => {
 
   return (
     <ThemeProvider theme={AppTheme}>
-      <FiltersProvider>
-        <NavigationContainer>
-          <ApolloProvider client={client}>
-            <SafeAreaProvider>
-              <RootNavigation />
-            </SafeAreaProvider>
-          </ApolloProvider>
-        </NavigationContainer>
-      </FiltersProvider>
+      <CharactersProvider>
+        <LocationsProvider>
+          <EpisodesProvider>
+            <NavigationContainer>
+              <ApolloProvider client={client}>
+                <SafeAreaProvider>
+                  <RootNavigation />
+                </SafeAreaProvider>
+              </ApolloProvider>
+            </NavigationContainer>
+          </EpisodesProvider>
+        </LocationsProvider>
+      </CharactersProvider>
     </ThemeProvider>
   )
 }

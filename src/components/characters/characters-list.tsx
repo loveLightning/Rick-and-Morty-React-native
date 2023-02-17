@@ -10,20 +10,19 @@ import { useTheme } from 'styled-components/native'
 
 import { useFetchCharactersQuery } from 'src/apollo'
 import { CharacterItem, ErrorMessage, Loader, NotFound } from 'src/components'
-import { useFiltersContext } from 'src/context'
-import { FilterTypes } from 'src/types'
+import { useCharacterFiltersContext } from 'src/context'
 
 export const CharactersList: React.FC = () => {
   const { extra_blue, white } = useTheme()
   const [loadingMore, setLoadingMore] = useState(false)
-  const { appliedFilters, clearFilters } = useFiltersContext()
+  const { appliedFilters, clearFilters } = useCharacterFiltersContext()
   const {
     data: characters,
     loading,
     error,
     fetchMore,
   } = useFetchCharactersQuery({
-    variables: appliedFilters[FilterTypes.character],
+    variables: appliedFilters,
   })
 
   const nextPage = characters?.characters.info.next
@@ -45,7 +44,7 @@ export const CharactersList: React.FC = () => {
   }
 
   const refetchData = () => {
-    clearFilters(FilterTypes.character)
+    clearFilters()
   }
 
   const renderFooter = () => {
