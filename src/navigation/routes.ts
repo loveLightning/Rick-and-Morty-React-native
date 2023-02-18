@@ -34,21 +34,17 @@ interface WithIdAndName {
   name: string
 }
 
-interface WithId {
-  id: string
-}
-
 export type CharacterDetailProp = RouteProp<
   { CharacterDetailScreen: WithIdAndName },
   'CharacterDetailScreen'
 >
 
 export type EpisodeDetailProp = RouteProp<
-  { EpisodeDetailScreen: WithId },
+  { EpisodeDetailScreen: WithIdAndName },
   'EpisodeDetailScreen'
 >
 
 export type LocationDetailProp = RouteProp<
-  { LocationDetailScreen: WithId },
+  { LocationDetailScreen: WithIdAndName },
   'LocationDetailScreen'
 >

@@ -29,10 +29,8 @@ const CharacterItem = memo(({ id, name, status, image }: Props) => {
           })
         }}>
         <ImageCharacter source={{ uri: image ?? undefined }} />
-        <TextStatus>{status}</TextStatus>
-        <TextName>
-          {name.length >= 25 ? name.slice(0, 25) + '...' : name}
-        </TextName>
+        <TextStatus numberOfLines={1}>{status}</TextStatus>
+        <TextName numberOfLines={2}>{name}</TextName>
       </Container>
     </ContainerCharacter>
   )

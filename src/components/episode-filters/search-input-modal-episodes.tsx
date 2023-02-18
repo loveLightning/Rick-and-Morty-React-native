@@ -125,7 +125,7 @@ export const SearchInputModalEpisodes = ({
         <Container>
           <FlatList
             contentContainerStyle={{
-              paddingBottom: 200,
+              paddingBottom: 20,
               paddingTop: 10,
             }}
             data={resultEpisodes}
@@ -147,6 +147,11 @@ export const SearchInputModalEpisodes = ({
   )
 }
 
+const Container = styled.View`
+  padding: 0 16px 0;
+  flex: 1;
+`
+
 const ContainerName = styled.TouchableOpacity`
   padding: 5px 0;
 `
@@ -155,8 +160,4 @@ const TextName = styled.Text`
   font-family: ${({ theme }) => theme.roboto400};
   font-size: 16px;
   color: ${({ theme }) => theme.light_black};
-`
-
-const Container = styled.View`
-  padding: 0 16px 16px;
 `

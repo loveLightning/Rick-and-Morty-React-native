@@ -47,6 +47,7 @@ export const InformationCharacter = ({ characterDetail }: Props) => {
                 screen: Screens.LocationDetail,
                 params: {
                   id: characterDetail.location.id,
+                  name: characterDetail.name,
                 },
               })
             }>

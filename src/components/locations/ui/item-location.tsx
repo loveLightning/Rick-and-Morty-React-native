@@ -1,13 +1,12 @@
-import React, { memo, ReactElement } from 'react'
+import React, { memo } from 'react'
 import styled from 'styled-components/native'
 
 interface PropLocation {
   name: string
   type: string
-  onPress: () => void
 }
 
-const Container = styled.TouchableOpacity`
+const Container = styled.View`
   border-width: 1px;
   border-color: ${({ theme }) => theme.white[2]};
   border-radius: 8px;
@@ -31,17 +30,14 @@ const TextName = styled(TextType)`
   line-height: 22px;
   color: ${({ theme }) => theme.green_dark};
 `
-
 // eslint-disable-next-line react/display-name
-const ItemLocation = memo(
-  ({ name, type, onPress }: PropLocation): ReactElement => {
-    return (
-      <Container activeOpacity={0.8} onPress={onPress}>
-        <TextType>{type}</TextType>
-        <TextName>{name.length > 25 ? name.slice(0, 25) : name}</TextName>
-      </Container>
-    )
-  },
-)
+const ItemLocation = memo(({ name, type }: PropLocation) => {
+  return (
+    <Container>
+      <TextType numberOfLines={1}>{type}</TextType>
+      <TextName numberOfLines={2}>{name}</TextName>
+    </Container>
+  )
+})
 
 export { ItemLocation }

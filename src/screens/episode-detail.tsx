@@ -18,7 +18,7 @@ import { EpsiodeQueryType } from 'src/types'
 
 export const EpisodeDetailScreen = () => {
   const {
-    params: { id },
+    params: { id, name },
   } = useRoute<EpisodeDetailProp>()
   const { extra_blue } = useTheme()
 
@@ -39,12 +39,12 @@ export const EpisodeDetailScreen = () => {
     setOptions({
       header: () => (
         <HeaderCard
-          title={result?.name}
+          title={name}
           ComponentsLeft={<ButtonBack pressOnBack={goBack} />}
         />
       ),
     })
-  }, [goBack, result?.name, setOptions])
+  }, [goBack, name, setOptions])
 
   if (loading) {
     return (

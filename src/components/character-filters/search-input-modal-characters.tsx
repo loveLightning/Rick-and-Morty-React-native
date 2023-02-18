@@ -126,7 +126,7 @@ export const SearchInputModalCharacters = ({
         <Container>
           <FlatList
             contentContainerStyle={{
-              paddingBottom: 200,
+              paddingBottom: 20,
               paddingTop: 10,
             }}
             data={resultCharacters}
@@ -159,5 +159,6 @@ const TextName = styled.Text`
 `
 
 const Container = styled.View`
-  padding: 0 16px 16px;
+  padding: 0 16px 0;
+  flex: 1;
 `

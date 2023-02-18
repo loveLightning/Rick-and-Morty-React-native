@@ -15,7 +15,7 @@ export const EpisodeDetail = ({ episodeDetail }: Props) => {
   }
 
   return (
-    <View>
+    <View style={{ width: '100%', height: '100%' }}>
       <ContainerHeaderImage>
         <DescriptionDetail
           status={episodeDetail?.episode}
@@ -29,7 +29,7 @@ export const EpisodeDetail = ({ episodeDetail }: Props) => {
         contentContainerStyle={{
           backgroundColor: 'white',
           justifyContent: 'space-between',
-          paddingBottom: 250,
+          paddingBottom: 20,
         }}
         data={episodeDetail?.characters}
         numColumns={2}

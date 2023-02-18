@@ -18,7 +18,7 @@ import { LocationQueryType } from 'src/types'
 
 export const LocationDetailScreen = () => {
   const {
-    params: { id },
+    params: { id, name },
   } = useRoute<LocationDetailProp>()
   const { extra_blue, white } = useTheme()
 
@@ -39,12 +39,12 @@ export const LocationDetailScreen = () => {
     setOptions({
       header: () => (
         <HeaderCard
-          title={result?.name}
+          title={name}
           ComponentsLeft={<ButtonBack pressOnBack={goBack} />}
         />
       ),
     })
-  }, [goBack, result?.name, setOptions])
+  }, [goBack, name, setOptions])
 
   if (loading) {
     return (

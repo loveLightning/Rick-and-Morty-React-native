@@ -29,13 +29,14 @@ const EpisodeItem = memo(({ episode, name, air_date, isLast, id }: Props) => {
                 screen: Screens.EpisodeDetail,
                 params: {
                   id,
+                  name,
                 },
               })
             }>
             <View>
               <SeasonEpisode>{episode}</SeasonEpisode>
-              <NameEpisode>{name}</NameEpisode>
-              <DateEpisode>{air_date}</DateEpisode>
+              <NameEpisode numberOfLines={1}>{name}</NameEpisode>
+              <DateEpisode numberOfLines={1}>{air_date}</DateEpisode>
             </View>
 
             <ArrowIcon />

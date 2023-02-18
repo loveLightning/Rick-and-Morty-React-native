@@ -53,15 +53,6 @@ export const LocationsList: React.FC = () => {
     clearFilters()
   }
 
-  const openScreen = (id: string) => {
-    push(Stacks.Locations, {
-      screen: Screens.LocationDetail,
-      params: {
-        id,
-      },
-    })
-  }
-
   const renderFooter = () => {
     return loadingMore ? (
       <ActivityIndicator size="large" color={extra_blue} />
@@ -94,13 +85,18 @@ export const LocationsList: React.FC = () => {
           keyExtractor={(item) => item.id.toString()}
           data={locationsResult?.results}
           renderItem={({ item }) => (
-            <ContainerLocations>
-              <ItemLocation
-                name={item.name}
-                type={item.type}
-                onPress={() => openScreen(item.id)}
-              />
-            </ContainerLocations>
+            <ContainerLocation
+              onPress={() =>
+                push(Stacks.Locations, {
+                  screen: Screens.LocationDetail,
+                  params: {
+                    id: item.id,
+                    name: item.name,
+                  },
+                })
+              }>
+              <ItemLocation name={item.name} type={item.type} />
+            </ContainerLocation>
           )}
           onEndReached={nextPage ? getByScrollCharacters : null}
           onEndReachedThreshold={Platform.OS == 'ios' ? 0.1 : 0.2}
@@ -115,7 +111,7 @@ export const LocationsList: React.FC = () => {
   )
 }
 
-const ContainerLocations = styled.View`
+const ContainerLocation = styled.TouchableOpacity`
   flex: 1;
   flex-direction: row;
   margin: 15px;
