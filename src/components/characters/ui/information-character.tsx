@@ -42,6 +42,7 @@ export const InformationCharacter = ({ characterDetail }: Props) => {
           </WrapLine>
 
           <ContainerLocation
+            activeOpacity={0.8}
             onPress={() =>
               push(Stacks.Locations, {
                 screen: Screens.LocationDetail,
