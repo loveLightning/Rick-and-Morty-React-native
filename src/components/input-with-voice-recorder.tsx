@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { ActivityIndicator, TouchableOpacity } from 'react-native'
 import Voice, { SpeechResultsEvent } from '@react-native-voice/voice'
 import styled, { useTheme } from 'styled-components/native'
@@ -18,11 +18,14 @@ export const InputWithVoiceRecorder = ({
   const buttonLabel = isRecord ? 'Stop' : 'Start'
   const { extra_blue } = useTheme()
 
-  const onSpeechResults = (event: SpeechResultsEvent) => {
-    if (event.value) {
-      setFiltersValues(event.value[0])
-    }
-  }
+  const onSpeechResults = useCallback(
+    (event: SpeechResultsEvent) => {
+      if (event.value) {
+        setFiltersValues(event.value[0])
+      }
+    },
+    [setFiltersValues],
+  )
 
   const onRecordVoice = async () => {
     if (isRecord) {
@@ -44,8 +47,7 @@ export const InputWithVoiceRecorder = ({
     return () => {
       clear()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [onSpeechResults])
 
   return (
     <Container>
@@ -76,14 +78,14 @@ export const InputWithVoiceRecorder = ({
   )
 }
 
+const Container = styled.View`
+  padding: 0 16px 16px;
+`
+
 const InputText = styled.TextInput`
   flex: 1;
   margin-left: 5px;
   padding: 8px;
-`
-
-const Container = styled.View`
-  padding: 0 16px 16px;
 `
 
 const WrapInput = styled.View`

@@ -12,10 +12,11 @@ import { SearchInputModalEpisodes } from './search-input-modal-episodes'
 export const EpisodeFilters = () => {
   const { setOptions, goBack } = useNavigation()
 
-  const [isNameModal, setIsNameModal] = useState(false)
-  const [isEpisodeModal, setIsEpisodeModal] = useState(false)
   const { filters, clearFilters, updateFilters, applyFilters } =
     useEpisodeFiltersContext()
+
+  const [isNameModal, setIsNameModal] = useState(false)
+  const [isEpisodeModal, setIsEpisodeModal] = useState(false)
 
   const applyFiltersHandler = useCallback(() => {
     applyFilters()

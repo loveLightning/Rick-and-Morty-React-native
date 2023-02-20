@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { ActivityIndicator, FlatList, Platform, View } from 'react-native'
 import styled, { useTheme } from 'styled-components/native'
 
@@ -51,7 +51,7 @@ export const SearchInputModalCharacters = ({
   )
   const nextPage = data?.characters.info.next
 
-  const getByScrollCharacters = async () => {
+  const getByScrollCharacters = useCallback(async () => {
     setLoadingMore(true)
 
     try {
@@ -64,7 +64,7 @@ export const SearchInputModalCharacters = ({
     } finally {
       setLoadingMore(false)
     }
-  }
+  }, [fetchMore, nextPage])
 
   const closeModal = () => {
     setIsVisible(!isVisible)
